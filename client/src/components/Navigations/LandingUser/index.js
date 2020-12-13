@@ -1,9 +1,8 @@
 // menampilkan navigasi cart dan profil user yang telah login
 
-import React,{Fragment,useContext} from 'react'
-import {AppContext} from "../../../context/appContext";
+import React,{Fragment} from 'react'
 
-import {  Link } from 'react-router-dom'
+import {  Link, useHistory } from 'react-router-dom';
 
 import { 
     NavItem,
@@ -26,12 +25,10 @@ import IconLogout from "../../../assets/img/icons/logout.png";
 
 const LandingUser = () => {
 
-    const [state, dispatch] = useContext(AppContext);
+  const router = useHistory();
 
     const handleLogout = () => {
-      dispatch({
-        type:"LOGOUT"
-      })
+      router.push("/logout");
     }
 
     return (

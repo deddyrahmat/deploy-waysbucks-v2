@@ -1,12 +1,10 @@
 import {createContext, useReducer} from 'react';
 
-import dataUsers  from "../config/FakeData/users.json";
 
 export const AppContext = createContext();
 
 
 const initialState = {
-    ...dataUsers,
     isLogin : false,
     user : {},
     role : "",
@@ -36,9 +34,11 @@ const reducer = (state, action) => {
             }
         case "AUTH_ERROR":
         case "LOGOUT":
+            localStorage.removeItem("token");
             return {
                 ...state,
-                isLogin : false
+                isLogin : false,
+                isLoading: false
             }    
         default:
             throw new Error();

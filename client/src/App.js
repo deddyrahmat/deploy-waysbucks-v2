@@ -19,6 +19,7 @@ import Product from "./pages/Product";
 import Toping from "./pages/Toping";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import Logout from "./components/Logout";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token)
@@ -66,6 +67,7 @@ function App() {
           </Route>
           <PrivateRoute exact path="/detail/:id" component={Detail} />
           <PrivateRoute exact path="/profile" component={Profile} />
+          <PrivateRoute exact path="/logout" component={Logout} />
           <Route exact path="/cart">
             <Cart />
           </Route>
