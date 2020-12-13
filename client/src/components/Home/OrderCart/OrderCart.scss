@@ -1,0 +1,31 @@
+.order-cart-product{
+    width: 80px;
+    height: 80px;
+}
+
+.order-cart-logo-product{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 19px;
+    height: 19px;
+}
+
+.order-cart-title-product{
+    font-weight: 900;
+    font-size: 14px;
+    color: #BD0707;
+}
+
+.order-cart-toping{
+    font-weight: 800;
+    font-size: 14px;
+    color: #974A4A;
+
+    .order-cart-list-toping{
+        font-weight: 400;
+        font-size: 14px;
+        color: #BD0707;
+    }
+}

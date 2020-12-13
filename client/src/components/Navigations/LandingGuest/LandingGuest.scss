@@ -1,0 +1,32 @@
+.title-formAuth {
+    color: #BD0707;
+    font-weight: 900;
+    margin-bottom: 29px;
+}
+
+.btn-auth {
+    font-weight: 700 !important;
+    padding: 6px 33px !important;
+}
+
+.btn-formAuth {
+    background-color: rgba(224, 200, 200, 0.25) !important;
+    border: 2px solid #BD0707 !important;
+    box-sizing: border-box;
+    border-radius: 5px !important;
+    color: rgba(104, 50, 50, 0.5) !important;
+}
+
+
+.btn-clickAuth {
+    font-weight: 900;
+    background-color: #BD0707 !important;
+    border-radius: 5px;
+    border-color: none !important;
+    margin-top: 29px;
+    margin-bottom: 20px;
+
+    &:hover {
+        background-color: #a12a2a !important;
+    }
+}

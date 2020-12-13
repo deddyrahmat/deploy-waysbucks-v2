@@ -1,0 +1,38 @@
+.title-product-transaction{
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 19px;
+    color: #BD0707;
+}
+
+.time-product-transaction{
+    color:#BD0707;
+    font-weight: 900;
+    font-size: 9px;
+    margin-top: -13px;
+    margin-bottom: 14px;
+
+    .date-product-transaction {
+        font-weight: 300;
+    }
+}
+
+.toping-product-transaction{
+    margin-bottom: 7px;
+    font-weight: 800;
+    font-size: 10px;
+    color: #974A4A;
+
+    .list-toping-product-transaction{
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 14px;
+        color: #BD0707;
+    }
+}
+
+.price-product-transaction{
+    font-size: 10px;
+    font-weight: 400;
+    color: #974A4A;
+}

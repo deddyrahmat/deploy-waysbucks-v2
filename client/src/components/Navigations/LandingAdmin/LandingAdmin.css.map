@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,oBAAoB,CAAC;EACjB,OAAO,EAAE,4BAA4B;CAUxC;;AAXD,AAGI,oBAHgB,CAGhB,eAAe,CAAA;EACX,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;CACf;;AANL,AAOI,oBAPgB,CAOhB,gBAAgB,CAAA;EACZ,WAAW,EAAE,GAAG;EAChB,SAAS,EAAE,IAAI;CAClB",
+    "sources": [
+        "LandingAdmin.scss"
+    ],
+    "names": [],
+    "file": "LandingAdmin.css"
+}

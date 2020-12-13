@@ -1,0 +1,24 @@
+.file {
+    border: 2px solid #BD0707;
+    padding: 12px 12px;
+    width: 100%;
+    height: 50px;
+    background: rgba(224, 200, 200, 0.25);
+    border-radius: 5px;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    margin-bottom: 35px;
+
+    color: rgba(126, 115, 109, 1);
+    cursor: pointer;
+
+    .file-input {
+        display: none;
+    }
+
+    .file-img {
+        margin-left: 95%;
+        margin-top: -15%;
+    }
+}

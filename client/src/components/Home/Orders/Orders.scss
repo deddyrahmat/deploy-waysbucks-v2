@@ -1,0 +1,29 @@
+.Product {
+    background: #F7DADA !important;
+    border-radius: 10px !important;
+    border: none;
+    margin-bottom: 86px;
+
+    .back-img {
+        height: 312px;
+        width: 100%;
+        background-size: cover;
+    }
+
+    .paragraf-product {
+        font-weight: 900;
+        color: #BD0707;
+        margin: 0;
+    }
+
+    .price-product {
+        color: #974A4A;
+    }
+}
+
+.logo-product {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
