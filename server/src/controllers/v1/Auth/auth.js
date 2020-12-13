@@ -156,6 +156,7 @@ exports.login = async (req, res) => {
 
         // simpan data role dari variabel account user yang login
         const role = account.role;
+        const fullname = account.fullname;
 
         //response login dengan token
         res.send({
@@ -164,6 +165,7 @@ exports.login = async (req, res) => {
             data: {
                 chanel : {
                     email,
+                    fullname,
                     token,
                     role
                 }
@@ -183,26 +185,26 @@ exports.login = async (req, res) => {
 }
 
 exports.checkAuth = async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const user = await User.findOne({
-      where: {
-        id: userId,
-      },
-    });
+    try {
+        const userId = req.user.id;
+        const user = await User.findOne({
+        where: {
+            id: userId,
+        },
+        });
 
-    res.send({
-      status: responseSuccess,
-      message: "User Valid",
-      data: user,
-    });
-  } catch (err) {
-    //error here
-    console.log(err);
-    return res.status(500).send({
-      error: {
-        message: "Server Error",
-      },
-    });
-  }
+        res.send({
+        status: responseSuccess,
+        message: "User Valid",
+        data: user,
+        });
+    } catch (err) {
+        //error here
+        console.log(err);
+        return res.status(500).send({
+        error: {
+            message: "Server Error",
+        },
+        });
+    }
 };
