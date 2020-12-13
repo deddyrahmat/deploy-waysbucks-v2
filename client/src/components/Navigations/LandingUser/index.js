@@ -25,7 +25,7 @@ import IconLogout from "../../../assets/img/icons/logout.png";
 
 const LandingUser = () => {
 
-  const router = useHistory();
+    const router = useHistory();
 
     const handleLogout = () => {
       router.push("/logout");

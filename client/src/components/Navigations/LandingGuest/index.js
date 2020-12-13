@@ -48,23 +48,28 @@ const LandingGuest = () => {
         const body = JSON.stringify({ email, password });
 
         const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      
-      const response = await API.post("/login", body, config);
-      
-      // console.log(response.data.data);
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        
+        const response = await API.post("/login", body, config);
+        
+        // console.log(response.data.data);
 
-      dispatch({
-        type:"LOGIN",
-        payload : response.data.data.chanel
-      })
+        const result = response.data.data.chanel;
+        dispatch({
+          type:"LOGIN",
+          payload : result
+        })
 
-      setAuthToken(response.data.data.chanel.token);
+        setAuthToken(result.token);
 
-      router.push("/");
+        if (result.role === "user") {
+          router.push("/");
+        }else if (result.role === "admin") {
+          router.push("/admin")
+        }
 
       } catch (err) {
         console.log(err);

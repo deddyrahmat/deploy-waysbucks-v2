@@ -65,20 +65,16 @@ function App() {
           <Route exact path="/">
             <LandingPage />
           </Route>
+
+          <PrivateRoute exact path="/logout" component={Logout} />
+
           <PrivateRoute exact path="/detail/:id" component={Detail} />
           <PrivateRoute exact path="/profile" component={Profile} />
-          <PrivateRoute exact path="/logout" component={Logout} />
+          <PrivateRoute exact path="/admin" component={Admin} />
+          <PrivateRoute exact path="/product" component={Product} />
+          <PrivateRoute exact path="/toping" component={Toping} />
           <Route exact path="/cart">
             <Cart />
-          </Route>
-          <Route exact path="/product">
-            <Product />
-          </Route>
-          <Route exact path="/toping">
-            <Toping />
-          </Route>
-          <Route exact path="/admin">
-            <Admin />
           </Route>
           <Route>
             <NotFound />

@@ -42,7 +42,7 @@ const Navigation = (props) => {
     if (state.isLogin) {
       if(state.role === "user"){
         return <LandingUser />
-      }else if (state.admin === "admin") {
+      }else if (state.role === "admin") {
         return <LandingAdmin />
       }
     }
@@ -51,17 +51,22 @@ const Navigation = (props) => {
     }
   }
 
+  const imgLogo = <NavbarBrand> <img src={Logo} width="80%" alt="logo"></img> </NavbarBrand> ;
 
   return (
     <Fragment>            
       <Navbar light expand="md" className="Navigation">
         <Container>
           
-        <Link to="/">
-        <NavbarBrand>
-            <img src={Logo} width="80%" alt="logo"></img>
-        </NavbarBrand>
-        </Link>
+          {state.role == 'user' ? (
+            <Link to="/">
+              {imgLogo}
+            </Link>
+          ) : state.role == 'admin' ? (
+            <Link to="/admin">
+              {imgLogo}
+            </Link>
+          ) : null }
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
