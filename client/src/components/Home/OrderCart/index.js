@@ -1,7 +1,9 @@
 // menampilkan seluruh product yang akan dijual
 
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Col, Card, CardImg, CardImgOverlay, Row } from 'reactstrap';
+
+import { API } from '../../../config/API';
 
 // Style Css
 import "./OrderCart.scss";
@@ -10,9 +12,53 @@ import "./OrderCart.scss";
 import Logo from "../../../assets/img/logo/Logo.png";
 import Trash from "../../../assets/img/icons/trash.png";
 
-const OrderCart = (props) => {
+const OrderCart = ({props, cart}) => {
 
-  // const { id, name,price, imageUrl } = product;
+  const { id, amount, topings } = cart;
+
+  const [itemOrder, setItemOrder] = useState([]);
+  const [itemOrderToping, setItemOrderToping] = useState([]);
+
+  const fetchOrderCart = async (id) => {
+    const response = await API(`/product/${id}`);
+    setItemOrder(response.data.data.product);
+  }
+
+  useEffect(() => {
+    fetchOrderCart(id);
+  },[])
+
+  const fetchOrderCartToping = async (dataId) => {
+    const responseToping = await API(`/toping/${dataId}`);
+    setItemOrderToping(responseToping.data.data.toping);
+  }
+
+  // ==================================
+  // ini tidak muncul karna datanya dari fakedataAPI
+  // ==================================
+  // const arr = [];
+  useEffect(() => {
+
+
+    // =================================
+    // fetchOrderCartToping(2);
+    // console.log("usee: ",topings);
+    Object.keys(topings).map((key, index) => 
+      // API(`/toping/${topings[index].id}`)
+      // .then((e) => {
+      //   setItemOrderToping(e.data.data.toping);
+      // })
+      // .then(() => {
+      //   arr.push(itemOrderToping)
+      //   console.log("kedua",arr);
+      // })
+        fetchOrderCartToping(topings[index].id)
+      );
+      // topings.map(top => console.log(top))
+    },[])
+    
+    console.log("tes",itemOrderToping);
+    
 
   return (
     <Fragment>
@@ -26,8 +72,19 @@ const OrderCart = (props) => {
           </Card>
         </Col>
         <Col md="7">
-          <p className="order-cart-title-product">Ice Coffe Palm Sugar</p>
-          <p className="order-cart-toping">Toping <span className="order-cart-list-toping">: Bill Berry Boba, Bubble Tea Gelatin</span></p>
+          <p className="order-cart-title-product">{itemOrder.name}</p>
+          <p className="order-cart-title-product">{amount}</p>
+          <p className="order-cart-toping">Toping 
+          <span className="order-cart-list-toping">: apa</span>
+          {
+          itemOrderToping.id
+            // topings.map(toping => (
+            //   toping.id
+            // )
+            // )
+          }
+          
+          </p>
         </Col>
         <Col md="3" className="text-right">
           <p className="text-danger"> Rp.33.000</p>

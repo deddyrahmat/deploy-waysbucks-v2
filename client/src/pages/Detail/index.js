@@ -12,8 +12,9 @@ import Navigation from '../../components/Navigations';
 
 import { AppContext } from '../../context/appContext';
 
+
 // Data Dummy Api
-import {Topings} from "../../config/FakeData/Topings";
+// import {Topings} from "../../config/FakeData/Topings";
 
 // images
 import Logo from "../../assets/img/logo/Logo.png";
@@ -27,12 +28,13 @@ const Detail = () => {
     const [state,dispatch] = useContext(AppContext);
 
     const [product, setProduct] = useState([]);
+    const [topings, setTopings] = useState([]);
 
     let {id} = useParams();
 
     const router = useHistory();
 
-    const fetchProduct = async () => {
+    const fetchProduct = async (id) => {
         const response = await API(`/product/${id}`);
         // console.log(response.data.data.product.name);
         setProduct(response.data.data.product);
@@ -40,17 +42,30 @@ const Detail = () => {
 
 
     useEffect(() => {
-        fetchProduct();
+        fetchProduct(id);
     }, []);
+
+    const fetchTopings = async () => {
+        const responseTopings = await API(`/topings`);
+        // console.log(responseTopings.data.data.product.name);
+        setTopings(responseTopings.data.data.topings);
+    }
+
+
+    useEffect(() => {
+        fetchTopings();
+    }, []);
+
+    // console.log("asdf :" ,topings);
 
     const handleAddTopings = (id) => {
 
         if (state.isLogin) {            
-            const filterTopingById = Topings.find(toping => toping.id === id);
+            // const filterTopingById = Topings.find(toping => toping.id === id);
 
             dispatch({
                 type : "ADD_TOPING",
-                payload : filterTopingById
+                payload : id
             });
         }else{
             alert('Please Login or Register')
@@ -107,8 +122,7 @@ const Detail = () => {
                                 <h4 className="detail-title-toping">Toping</h4>
                                 
                                 <Row>
-                                    {
-                                        Topings.map((toping) => (
+                                        {topings.map((toping) => (
                                             <Col md="3">
                                                 <ItemToping key={toping.id} toping={toping} handleAddTopings={handleAddTopings}/>
                                             </Col>

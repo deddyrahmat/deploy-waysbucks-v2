@@ -13,12 +13,14 @@ const ItemTopings = ({props,toping,handleAddTopings}) => {
 
   const { id, name,price, imageUrl } = toping;
 
+  // console.log('did : '+id)
+
   return (
     <Fragment>
       {/* <img src={successIcon} alt="success" className="icon-success-toping"></img> */}
       <figure className="figure mt-3 text-center item-toping" onClick={() => handleAddTopings(id)}>
         <img src={imageUrl} alt="toping" className="rounded-circle img-toping"></img>
-        <figcaption class="text-center caption-toping">{name}</figcaption>
+        <figcaption className="text-center caption-toping">{name}</figcaption>
       </figure>
     </Fragment>
   );

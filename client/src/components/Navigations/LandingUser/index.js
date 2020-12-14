@@ -39,7 +39,7 @@ const LandingUser = () => {
     return (
         <Fragment>
             <NavItem className="mt-2">
-                <NavLink>
+                <NavLink tag={Link} to="/cart">
                     <img src={IconCart} alt="Icon Cart" width="30px"></img>
                     <span>{state.carts.length}</span>
                 </NavLink>

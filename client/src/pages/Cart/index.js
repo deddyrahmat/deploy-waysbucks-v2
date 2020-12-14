@@ -1,8 +1,10 @@
-import React,{Fragment} from 'react'
+import React,{Fragment, useContext} from 'react'
 import { Col, Row } from 'reactstrap';
 import FormCart from '../../components/Home/FormCart';
 import OrderCart from '../../components/Home/OrderCart';
 import Navigation from '../../components/Navigations';
+
+import {AppContext} from "../../context/appContext";
 
 // Style Css
 import "./Cart.scss";
@@ -11,6 +13,10 @@ import "./Cart.scss";
 import attach from "../../assets/img/icons/attachement.svg";
 
 const Cart = () => {
+
+    const [state, dispatch] = useContext(AppContext);
+    console.log("tes cart:",state);
+
     return (
         <Fragment>
             <Navigation />
@@ -20,8 +26,11 @@ const Cart = () => {
                 <Row>
                     <Col md="8">
                         <hr className="border-danger mt-n1"></hr>
-                        <OrderCart />
-                        <OrderCart />
+                        {
+                            state.carts.map(cart => (
+                                <OrderCart key={cart.id} cart={cart} />
+                            ))
+                        }
                         <hr className="border-danger"></hr>
                         <Row>
                             <Col md="7">

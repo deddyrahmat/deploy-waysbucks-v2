@@ -46,7 +46,7 @@ const reducer = (state, action) => {
                     ...state.isToping,
                     {
                         // ...payload
-                        id : payload.id
+                        id : payload
                     }
                 ]
             }
