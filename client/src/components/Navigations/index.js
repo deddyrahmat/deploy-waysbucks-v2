@@ -58,15 +58,15 @@ const Navigation = (props) => {
       <Navbar light expand="md" className="Navigation">
         <Container>
           
-          {state.role == 'user' ? (
-            <Link to="/">
-              {imgLogo}
-            </Link>
-          ) : state.role == 'admin' ? (
+          {state.role === 'admin' ? (
             <Link to="/admin">
               {imgLogo}
             </Link>
-          ) : null }
+          ) : (
+            <Link to="/">
+              {imgLogo}
+            </Link>
+          ) }
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>

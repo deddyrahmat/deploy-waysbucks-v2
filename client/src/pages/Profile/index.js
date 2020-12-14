@@ -1,6 +1,8 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { Card, Col, Row } from 'reactstrap';
 import Navigation from '../../components/Navigations'
+
+import {AppContext} from "../../context/appContext";
 
 // images
 import Logo from "../../assets/img/logo/Logo.png";
@@ -10,6 +12,9 @@ import "./Profile.scss";
 import Transactions from '../../components/Home/Transactions';
 
 const Profile = () => {
+
+    const [state] = useContext(AppContext);
+
     return (
         <Fragment>
             <Navigation />
@@ -24,11 +29,11 @@ const Profile = () => {
                                 <Col md="8">
                                     <span>
                                         <p className="title-profile">Full Name</p>
-                                        <p className="value-profile">Egi Ganteng</p>
+                                        <p className="value-profile">{state.fullname}</p>
                                     </span>                                        
                                     <span>
                                         <p className="title-profile">Email</p>
-                                        <p className="value-profile">egigans@gmail.com</p>
+                                        <p className="value-profile">{state.email}</p>
                                     </span>                                        
                                 </Col>
                             </Row>

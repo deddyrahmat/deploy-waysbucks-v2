@@ -26,22 +26,25 @@ const LandingGuest = () => {
 
   const toggleRegister = () => setModalRegister(!modalRegister);
 
-  const [formData, setFormData] = useState({
+  // ============================================
+  // Login
+  // ============================================
+
+  const [formDataLogin, setFormDataLogin] = useState({
     email : '',
     password : ''
   })
 
-  const { email, password } = formData;
+  const { email, password } = formDataLogin;
 
   const router = useHistory();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChangeLogin = (e) => {
+    setFormDataLogin({ ...formDataLogin, [e.target.name]: e.target.value });
   }
+  
 
-  console.log(formData);
-
-  const handleSubmit = async (e) => {
+  const handleSubmitLogin = async (e) => {
       e.preventDefault();
 
       try {
@@ -77,6 +80,68 @@ const LandingGuest = () => {
   }
 
 
+  // ============================================
+  // Registrasi
+  // ============================================
+  const [formDataRegister, setFormDataRegister] = useState({
+    fullname : '',
+    emailRegis : '',
+    passwordRegis : ''
+  })
+
+  const { emailRegis, passwordRegis, fullname } = formDataRegister;
+
+  const handleChangeRegis = (e) => {
+    setFormDataRegister({ ...formDataRegister, [e.target.name]: e.target.value });
+  }  
+
+  console.log(formDataRegister);
+
+  const handleSubmitRegister = async (e) => {
+      e.preventDefault();
+
+      try {
+        let fullname = formDataRegister.fullname;
+        let email = formDataRegister.emailRegis;
+        let password = formDataRegister.passwordRegis;
+        const body = JSON.stringify({ fullname, email, password });
+        const bodyLogin = JSON.stringify({ email, password });
+        console.log("body : "+body);
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        
+        const response = await API.post("/register", body, config);
+        
+        if (response.status === 200 ) {
+          
+          // const responseLogin = await API.post("/login", bodyLogin, config);
+          console.log("respon regis : "+response);
+          // console.log(responseLogin);          
+          
+          let result = response.data.data;
+          result.role = "user";
+          dispatch({
+            type:"LOGIN",
+            payload : result
+          })
+          
+          setAuthToken(result.token);
+          
+          router.push("/");
+        }else{
+          console.log(response.status)
+        }
+
+      } catch (err) {
+        console.log(err);
+      }
+  }
+
+
   const loginPage = () => {
     toggleLogin();
     toggleRegister();
@@ -97,13 +162,13 @@ const LandingGuest = () => {
             <Modal isOpen={modalLogin} toggle={toggleLogin} className="className">
               <ModalBody>
                 <Container>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmitLogin}>
                   <h3 className="title-formAuth">Login</h3>
                   <FormGroup>
-                    <Input type="email" name="email" id="email" placeholder="Email" onChange={(e) => {handleChange(e)}} className="btn-formAuth" value={email} />
+                    <Input type="email" name="email" id="email" placeholder="Email" onChange={(e) => {handleChangeLogin(e)}} className="btn-formAuth" value={email} />
                   </FormGroup>
                   <FormGroup>
-                    <Input type="password" name="password" id="password" onChange={(e) => {handleChange(e)}} placeholder="Password" className="btn-formAuth" value={password} />
+                    <Input type="password" name="password" id="password" onChange={(e) => {handleChangeLogin(e)}} placeholder="Password" className="btn-formAuth" value={password} />
                   </FormGroup>
                   
                   <Button block color="danger" className="btn-clickAuth" type="submit" >Login</Button>
@@ -123,19 +188,19 @@ const LandingGuest = () => {
             <Modal isOpen={modalRegister} toggle={toggleRegister} className="className">
               <ModalBody>
                 <Container>
-                  <Form>
+                  <Form onSubmit={handleSubmitRegister}>
                     <h3 className="title-formAuth">Register</h3>
                     <FormGroup>
-                      <Input type="email" name="email" id="email" placeholder="Email" className="btn-formAuth" />
+                      <Input type="email" name="emailRegis" id="emailRegis" placeholder="Email" className="btn-formAuth" onChange={(e) => {handleChangeRegis(e)}}  value={emailRegis} />
                     </FormGroup>
                     <FormGroup>
-                      <Input type="password" name="password" id="password" placeholder="Password" className="btn-formAuth" />
+                      <Input type="password" name="passwordRegis" id="passwordRegis" placeholder="Password" className="btn-formAuth" onChange={(e) => {handleChangeRegis(e)}}  value={passwordRegis} />
                     </FormGroup>
                     <FormGroup>
-                      <Input type="text" name="fullname" id="fullname" placeholder="Fullname" className="btn-formAuth" />
+                      <Input type="text" name="fullname" id="fullname" placeholder="Fullname" className="btn-formAuth" onChange={(e) => {handleChangeRegis(e)}}  value={fullname} />
                     </FormGroup>
                     
-                    <Button block color="danger" className="btn-clickAuth" type="button">Register</Button>
+                    <Button block color="danger" className="btn-clickAuth" type="submit">Register</Button>
                   </Form>
                   <p className="text-center">Already have an account ? Klik <b onClick={loginPage}>Here</b> </p>
               </Container>

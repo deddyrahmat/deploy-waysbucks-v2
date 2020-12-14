@@ -68,11 +68,14 @@ function App() {
 
           <PrivateRoute exact path="/logout" component={Logout} />
 
-          <PrivateRoute exact path="/detail/:id" component={Detail} />
+          {/* <PrivateRoute exact path="/detail/:id" component={Detail} /> */}
           <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute exact path="/admin" component={Admin} />
           <PrivateRoute exact path="/product" component={Product} />
           <PrivateRoute exact path="/toping" component={Toping} />
+          <Route exact path="/detail/:id">
+            <Detail />
+          </Route>
           <Route exact path="/cart">
             <Cart />
           </Route>

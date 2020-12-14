@@ -1,8 +1,11 @@
 // menampilkan navigasi cart dan profil user yang telah login
+import React,{Fragment, useContext} from 'react'
 
-import React,{Fragment} from 'react'
+import {AppContext} from "../../../context/appContext";
 
 import {  Link, useHistory } from 'react-router-dom';
+
+// API
 
 import { 
     NavItem,
@@ -25,6 +28,8 @@ import IconLogout from "../../../assets/img/icons/logout.png";
 
 const LandingUser = () => {
 
+    const [state] = useContext(AppContext);
+
     const router = useHistory();
 
     const handleLogout = () => {
@@ -36,12 +41,14 @@ const LandingUser = () => {
             <NavItem className="mt-2">
                 <NavLink>
                     <img src={IconCart} alt="Icon Cart" width="30px"></img>
+                    <span>{state.carts.length}</span>
                 </NavLink>
             </NavItem>
 
             <UncontrolledDropdown nav inNavbar className="mt-2">
               <DropdownToggle nav caret>
                 <img src={AvatarUser} alt="Icon Cart" width="30px"></img>
+                <span className="mx-2 font-weight-bold">{state.fullname}</span>
               </DropdownToggle>
               <DropdownMenu right className="dropdown-size">
                 <DropdownItem className="dropitem-navigation" tag={Link} to="/profile">
