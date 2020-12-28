@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
   Toping.init({
     name: DataTypes.STRING,
     price: DataTypes.INTEGER,
-    photo: DataTypes.STRING
+    photo: DataTypes.STRING,
+    cloudinary_id: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Toping',

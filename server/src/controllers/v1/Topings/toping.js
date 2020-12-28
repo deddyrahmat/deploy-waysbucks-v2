@@ -3,6 +3,8 @@ const {Toping} = require("../../../../models")
 
 const Joi = require("joi");
 
+const cloudinary = require("../../../middleware/cloudinary");
+
 // delete file
 const fs = require('fs');
 
@@ -107,7 +109,10 @@ exports.createToping = async (req, res) => {
             })
         }
 
-        const toping = await Toping.create({...body, photo: fileName });
+        const result = await cloudinary.uploader.upload(files.photo[0].path);//harus path karna menangkap data path saja
+
+        const toping = await Toping.create({...body,photo: result.secure_url, cloudinary_id: result.public_id, });
+        // const toping = await Toping.create({...body, photo: fileName });
 
         res.send({
             status : "Success",

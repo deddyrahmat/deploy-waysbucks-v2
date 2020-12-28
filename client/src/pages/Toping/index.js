@@ -1,15 +1,45 @@
 // page add product by admin
 
-import React, { Fragment } from 'react'
+import React, { Fragment,useState, useContext, useEffect } from 'react'
 import { Col, Row } from 'reactstrap';
+
+// component
 import FormToping from '../../components/Home/FormToping';
-import Navigation from '../../components/Navigations'
+import Navigation from '../../components/Navigations';
+import {AppContext} from "../../context/appContext";
 
 // style css
 import "./Toping.scss";
 
 
 const Toping = () => {
+
+    const [state, dispatch] = useContext(AppContext);
+
+    // ===============================================================
+    // fitur upload image dan image preview
+    // ===============================================================
+    // menampung image yang akan di tampilkan dan disimpan
+    const [imagePrev, setImagePrev] = useState({photos : []});
+    
+        
+    useEffect(() => {
+        if (state.previewImage && state.previewImage !== null) {            
+            setImagePrev({
+                // ...prevState,
+                photos: [
+                    {
+                    file: state.previewImage,
+                    preview: URL.createObjectURL(state.previewImage)
+                    }
+                ]
+            })
+        }
+    }, [state.previewImage])
+    // ===============================================================
+    // fitur upload image dan image preview
+    // ===============================================================
+
     return (
         <Fragment>
             <Navigation />
@@ -20,8 +50,25 @@ const Toping = () => {
                             {/* style css ini terletak di compnent navigation landingguest */}
                             <FormToping btn_auth="btn-auth" btn_formAuth="btn-formAuth" title_formAuth="title-formAuth" btn_clickAuth="btn-clickAuth pay-page-product d-block mx-auto"/>
                         </Col>
-                        <Col md="5">
-                            <img src="https://s3-alpha-sig.figma.com/img/4348/8c71/4273019eb029d3a34583371f7000ecba?Expires=1608508800&Signature=eFCgygKRYRiqs7B-1WEopUGXojT~eIIWtH5ABN~CCJ9NVGR9aEVsxbl6o8PBVKZJZcT1HKg-OpdKxUygb84YdmzJ1R78ilw-q-CsCNbAMRBYovW-CUkJgXY6W~nbQ96EjtelMQjx5J~o1cE90ATZtMPwf4uKKUKN-czusfYOdmxFJRTK6OB4IPKVefS8ALYUN7PGWQjo8QEiaAWUfTfEylpQ2d3lLgY3W4Xm2e6fts8npzzy~P3Dd~HC9rSFCdpVDltR5KmDSEet1qRCjRbv1i-nBAh~9Wi5aYjxRyPDfIA6DE8VhIm0cd8CyBWppkxBCUlmEdWJ8IjuoS6Uq38iqg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" alt="File Product Toping" className="img-fluid file-product" ></img>
+                        <Col md="5" className="text-center">
+                            {
+                                imagePrev.photos == [] ? (
+                                    <div className="add-product-img-container align-center">
+                                        <h1 className="">PREVIEW</h1>
+                                    </div>
+                                ):imagePrev.photos !== [] && imagePrev.photos[0] ? (
+                                    <img
+                                        src={imagePrev.photos[0].preview}
+                                        alt="add-product"
+                                        className="img-fluid file-product"
+                                    />
+                                ):(
+                                    <div className="add-product-img-container align-center">
+                                        <h4 className="">PREVIEW</h4>
+                                    </div>
+                                )
+                                
+                            }
                         </Col>
                     </Row>
                 </div>

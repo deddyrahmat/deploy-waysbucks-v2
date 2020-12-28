@@ -35,6 +35,7 @@ const LandingPage = () => {
         fetchProducts();
     }, [])//saat menuliskan dependency [] kosong maka pemanggilan api hanya dilakukan sekali saja
 
+    console.log("produ" , productsItems);
 
     return (
         <Fragment>

@@ -17,6 +17,9 @@ module.exports = {
       photo: {
         type: Sequelize.STRING
       },
+      cloudinary_id: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

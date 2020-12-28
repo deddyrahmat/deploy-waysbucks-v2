@@ -43,7 +43,7 @@ const Detail = () => {
 
     useEffect(() => {
         fetchProduct(id);
-    }, []);
+    }, [id]);
 
     const fetchTopings = async () => {
         const responseTopings = await API(`/topings`);
@@ -62,6 +62,8 @@ const Detail = () => {
 
         if (state.isLogin) {            
             // const filterTopingById = Topings.find(toping => toping.id === id);
+            // let x = document.getElementById(id).checked
+            // console.log("x", x)
 
             dispatch({
                 type : "ADD_TOPING",
@@ -88,7 +90,7 @@ const Detail = () => {
         await dispatch({
                 type : "REMOVE_TOPINGS"
             });
-            router.push('/');
+            router.push('/cart');
         
         // alert(id);
     }
@@ -121,7 +123,7 @@ const Detail = () => {
 
                                 <h4 className="detail-title-toping">Toping</h4>
                                 
-                                <Row>
+                                <Row className="d-flex flex-wrap">
                                         {topings.map((toping) => (
                                             <Col md="3">
                                                 <ItemToping key={toping.id} toping={toping} handleAddTopings={handleAddTopings}/>

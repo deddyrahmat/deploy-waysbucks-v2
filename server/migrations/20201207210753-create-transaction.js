@@ -42,6 +42,9 @@ module.exports = {
       income: {
         type: Sequelize.INTEGER
       },
+      cloudinary_id: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

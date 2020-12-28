@@ -28,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     posCode: DataTypes.STRING,
     attachment: DataTypes.STRING,
     status: DataTypes.STRING,
-    income: DataTypes.INTEGER
+    income: DataTypes.INTEGER,
+    cloudinary_id: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Transaction',

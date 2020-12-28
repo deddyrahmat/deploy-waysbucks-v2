@@ -95,7 +95,6 @@ const LandingGuest = () => {
     setFormDataRegister({ ...formDataRegister, [e.target.name]: e.target.value });
   }  
 
-  console.log(formDataRegister);
 
   const handleSubmitRegister = async (e) => {
       e.preventDefault();
@@ -159,7 +158,7 @@ const LandingGuest = () => {
       <NavItem className="mt-2">
           <NavLink>
             <Button outline color="danger" className="btn-auth" onClick={toggleLogin}>Login</Button>
-            <Modal isOpen={modalLogin} toggle={toggleLogin} className="className">
+            <Modal isOpen={modalLogin} toggle={toggleLogin} className="size-modal mx-auto">
               <ModalBody>
                 <Container>
                 <Form onSubmit={handleSubmitLogin}>
@@ -185,7 +184,7 @@ const LandingGuest = () => {
       <NavItem className="mt-2">
           <NavLink>
             <Button color="danger" className="btn_auth" onClick={toggleRegister}>Register</Button>
-            <Modal isOpen={modalRegister} toggle={toggleRegister} className="className">
+            <Modal isOpen={modalRegister} toggle={toggleRegister} className="size-modal mx-auto">
               <ModalBody>
                 <Container>
                   <Form onSubmit={handleSubmitRegister}>

@@ -9,6 +9,7 @@ const initialState = {
     isLogin : false,
     role : "",
     fullname : "",
+    previewImage : null,
     email : "",
     isToping : [],
     carts : [],
@@ -21,24 +22,6 @@ const reducer = (state, action) => {
     switch (type) {
         case "ADD_TOPING" :
 
-            // cek apakah toping ini sudah dibeli
-            // const filterToping = state.carts.filter(toping => toping.id === action.payload.id);
-
-            // jika sudah ada di cart, maka tambaha qty nya saja
-            // if (filterToping.length > 0) {
-            //     return {
-            //     ...state,
-            //     carts: state.carts.map((toping) =>
-            //         toping.id === action.payload.id
-            //         ? {
-            //             ...toping,
-            //             qty: toping.qty + 1,
-            //             }
-            //         : toping
-            //     ),
-            //     };
-            // }
-
             // jika belum ada toping ini di cart, tambahkan toping kedalam cart
             return {
                 ...state,
@@ -49,6 +32,13 @@ const reducer = (state, action) => {
                         id : payload
                     }
                 ]
+            }
+        case "CANCEL_TOPING" :
+
+            // jika belum ada toping ini di cart, tambahkan toping kedalam cart
+            return {
+                ...state,
+                isToping : payload
             }
         case "REMOVE_TOPINGS" :
             return {
@@ -87,11 +77,26 @@ const reducer = (state, action) => {
                     }
                 ]
             }
+        case "IMG_PREVIEW" :
+            return {
+                ...state,
+                previewImage : payload
+            }
+
+        // case "CHANGE_NAME_IMAGE" :
+        //     return{
+        //         ...state,
+        //         previewImage : {
+        //             ...state.previewImage,
+        //             name : payload.name
+        //         }
+        //     }
         case "USER_LOADED":
         return {
             ...state,
             isLogin: true,
             isLoading: false,
+            previewImage : null,
             role : payload.role,
             fullname : payload.fullname,
             email : payload.email
