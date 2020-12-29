@@ -2,6 +2,7 @@
 
 import React, { useState,useContext } from 'react';
 import { useHistory } from "react-router-dom";
+import NumberFormat from 'react-number-format';
 
 import { AppContext } from '../../../context/appContext';
 
@@ -22,9 +23,7 @@ const ItemTopings = ({props,toping,handleAddTopings}) => {
 
   // console.log('did : '+id)
 
-  const [topingPrice, setTopingPrice] = useState([])
-
-  const handleTotal = (price, id, name) => {
+  const handleToping = async (price, id, name) => {
     if (state.isLogin) {            
       // cek inputan user
         let x = document.getElementById(name).checked
@@ -33,9 +32,9 @@ const ItemTopings = ({props,toping,handleAddTopings}) => {
         // jika user menekan inputan check maka akan menghasilkan nilai true dan a akan menambah data toping
         if(x) {
             // const changeData = topingPrice.concat({id: id, price: price})
-            dispatch({
+            await dispatch({
               type : "ADD_TOPING",
-              payload : id
+              payload : {id,price, name}
             });
             // return setTopingPrice(...topingPrice, changeData)
             // return setTopingPrice(changeData)
@@ -49,7 +48,7 @@ const ItemTopings = ({props,toping,handleAddTopings}) => {
                   result = [...result, item];
                 }
             })
-            dispatch({
+            await dispatch({
               type : "CANCEL_TOPING",
               payload : result
             });            
@@ -60,19 +59,27 @@ const ItemTopings = ({props,toping,handleAddTopings}) => {
     }
   }
 
-  console.log("add toping ", topingPrice);
+  console.log("status ", state);
   return (
     <div className="toping-wrapper">
       <div className="round">
           <label for={name}>
             <img className="img-toping1" src={photo} alt="toping" />
           </label> 
-          <input onChange={() => handleTotal(price, id, name)} value={price} type="checkbox" id={name} />
+          <input onChange={() => handleToping(price, id, name)} value={price} type="checkbox" id={name} />
           <label className="label-checkbox" for={name}></label>
       </div>
       <div className="title-toping-wrapper">
           <p className="title-toping">{name}</p>
-          <p className="title-toping mt-n3">{price}</p>
+          <NumberFormat 
+              value={price} 
+              displayType={'text'} 
+              thousandSeparator={true} 
+              prefix={'Rp. '} 
+              renderText={
+                value => <p className="title-toping mt-n3">{value}</p>
+              } />
+          
       </div>
   </div>
     // <Fragment>

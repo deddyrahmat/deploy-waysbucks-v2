@@ -1,10 +1,11 @@
 // menampilkan seluruh product yang akan dijual
 
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useContext } from 'react';
 import { Col, Card, CardImg, CardImgOverlay, Row } from 'reactstrap';
+import NumberFormat from 'react-number-format';
 
 import { API } from '../../../config/API';
-
+import {AppContext} from "../../../context/appContext";
 // Style Css
 import "./OrderCart.scss";
 
@@ -16,48 +17,127 @@ const OrderCart = ({props, cart}) => {
 
   const { id, amount, topings } = cart;
 
-  const [itemOrder, setItemOrder] = useState([]);
-  const [itemOrderToping, setItemOrderToping] = useState([]);
+  const [state, dispatch] = useContext(AppContext);
 
+  const [itemOrder, setItemOrder] = useState([]);//data product
+
+  // const [itemOrderToping, setItemOrderToping] = useState([]);
+
+  const [total, setTotal] = useState(0);
+  
+  const [subTotal, setSubTotal] = useState([]);
+  // =======================================================
+  // product
+  // =======================================================
   const fetchOrderCart = async (id) => {
     const response = await API(`/product/${id}`);
     setItemOrder(response.data.data.product);
   }
-
+  
   useEffect(() => {
     fetchOrderCart(id);
   },[])
+  // =======================================================
+  // product
+  // =======================================================
+  
+  // Data Toping
+  // useEffect(() => {
+  //   state.carts.map(cart => 
+  //     itemOrder.id == cart.id && (
+  //       Object.keys(cart.topings).length > 0 && (
 
-  const fetchOrderCartToping = async (dataId) => {
-    const responseToping = await API(`/toping/${dataId}`);
-    setItemOrderToping(responseToping.data.data.toping);
-  }
+  //         Object.keys(cart.topings).map((index) => 
+  //           setItemOrderToping(cart.topings[index])
+  //           // <span className="order-cart-list-toping"> {(cart.topings[index].name)}</span>
+  //         )
+  //       )
+  //     )
+  //   )
+  // }, [itemOrder])
 
-  // ==================================
-  // ini tidak muncul karna datanya dari fakedataAPI
-  // ==================================
-  // const arr = [];
+
+  // console.log("data toping", itemOrderToping);
+
+  // =======================================================
+  // SubTotal
+  // =======================================================
+  // useEffect(() => {
+  //   state.carts.map(cart => {
+  //       if (itemOrder.id == cart.id) {
+  //         if (Object.keys(cart.topings).length > 0) {
+  //           Object.keys(cart.topings).map((index) => {
+  //             let priceList = parseInt(cart.topings[index].price)
+  //             // const total = Object.values(add).reduce((t, n) => t + n)
+  //             // const total = Object.values(priceList).reduce((t, n) => t + n)
+  //               let sum = Object.values(priceList).reduce((t, n) => t + n)
+  //               let sumTotal = itemOrder.price + sum
+  //               setTotal(sumTotal)
+  //             }
+  //             // <span className="order-cart-list-toping"> {(cart.topings[index].name)}</span>
+  //           )
+  //         }
+  //       }
+  //     }
+  //   )
+  // }, [itemOrder.id])
+  // =======================================================
+  // SubTotal
+  // =======================================================
+
+
+  let totaltemp = [];
   useEffect(() => {
-
-
-    // =================================
-    // fetchOrderCartToping(2);
-    // console.log("usee: ",topings);
-    Object.keys(topings).map((key, index) => 
-      // API(`/toping/${topings[index].id}`)
-      // .then((e) => {
-      //   setItemOrderToping(e.data.data.toping);
-      // })
-      // .then(() => {
-      //   arr.push(itemOrderToping)
-      //   console.log("kedua",arr);
-      // })
-        fetchOrderCartToping(topings[index].id)
-      );
-      // topings.map(top => console.log(top))
-    },[])
+    console.log("total temp atas",totaltemp);
+    // let priceList = state.isToping.map((prices) => parseInt(prices.price))
+    let sum = totaltemp.reduce((a,b) => a + b, 0)
+    let sumTotal = itemOrder.price + sum
+    // dispatch({
+    //   type : "SUB_TOTAL",
+    //   payload : parseInt(sumTotal)
+    // });  
+    setTotal(sumTotal);
     
-    console.log("tes",itemOrderToping);
+  }, [itemOrder.price])
+
+  let totalSubOrder = [];
+  useEffect(() => {
+    console.log("total temp totalSubOrder",totaltemp);
+    // let priceList = state.isToping.map((prices) => parseInt(prices.price))
+    let sum = totaltemp.reduce((a,b) => a + b, 0)
+    let sumTotal = itemOrder.price + sum
+
+    if (!isNaN(sumTotal)) {
+      console.log("dsipat",sumTotal);
+      dispatch({
+        type : "SUB_TOTAL",
+        payload : sumTotal
+      });
+    }
+    // setSubTotal([...subTotal,sumTotal]);
+    
+  }, [itemOrder.price])
+
+  // const nilai = [];
+  // useEffect(() => {
+    
+  //   if (total > 0 && typeof(total) == Number) {
+  //     console.log("muncul gak?");
+  //     // nilai = ;
+  //     setSubTotal([...subTotal,total]);
+  //   }
+  // }, [total,subTotal])
+
+  // useEffect(() => {
+  //   dispatch({
+  //     type: "GET_TOTAL_CART",
+  //   });
+  // }, [dispatch]);
+    
+    console.log("type total",typeof(total));
+    console.log("total",total);
+    console.log("tes",state);
+    // console.log("sub total ",subTotal);
     
 
   return (
@@ -65,7 +145,7 @@ const OrderCart = ({props, cart}) => {
       <Row className="mb-3">
         <Col md="2">
           <Card inverse className="order-cart-product">
-            <CardImg src="https://s3-alpha-sig.figma.com/img/4348/8c71/4273019eb029d3a34583371f7000ecba?Expires=1607299200&Signature=MHgd2V8TP9FK0In3Ik199anJJq37eTgSr5W7BrsZ2FB1e5cQuvzH0x85TproA8FPfQI-Jf7~5J1Q-UJCPnuppzSy5WTnkHn4ghB8Cwh-lzvkmlL1YANOxTs33Mqq5CzCAHgBtNEdrNzLdOxfc4QdyzLXTnhVTZkTIaB38XrwwWsMMDij0Y6IWF-RCuNn7CODZI~SX3-uVyjdx~jknE6Ma-ca16xcJ57C5pHbrV5BKz4jWkxMP2u32VUrSnVVDGpG2a2Rw7EC-pFbOX~nu8zQ4lvODW7lo2EkDyE-umnHIRAH2Dumv5XeIFkrxQphl7sKFcooNGrl7jN6DhYpnVWwLw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" alt="Product" className="order-cart-product border-0"  />
+            <CardImg src={itemOrder.photo} alt="Product" className="order-cart-product border-0"  />
             <CardImgOverlay>
               <img src={Logo} alt="Logo Produk" className="order-cart-logo-product"></img>
             </CardImgOverlay>
@@ -74,20 +154,54 @@ const OrderCart = ({props, cart}) => {
         <Col md="7">
           <p className="order-cart-title-product">{itemOrder.name}</p>
           <p className="order-cart-title-product">{amount}</p>
-          <p className="order-cart-toping">Toping 
-          <span className="order-cart-list-toping">: apa</span>
+          <p className="order-cart-toping">Toping :
+          {/* <span className="order-cart-list-toping">: apa</span> */}
           {
-          itemOrderToping.id
-            // topings.map(toping => (
-            //   toping.id
-            // )
-            // )
+            state.carts.map(cart => 
+              itemOrder.id == cart.id && (
+                Object.keys(cart.topings).length > 0 && (
+
+                  Object.keys(cart.topings).map((index) => 
+                    <span className="order-cart-list-toping"> {(cart.topings[index].name)}</span>
+                  )
+                )
+              )
+            )
           }
           
           </p>
         </Col>
         <Col md="3" className="text-right">
-          <p className="text-danger"> Rp.33.000</p>
+          {
+            state.carts.map(cart => 
+              itemOrder.id == cart.id && (
+                Object.keys(cart.topings).length > 0 && (
+
+                  // ==============================================not function
+                  // cart.topings.reduce((acc, obj) => acc + obj.score, 0)
+                  // cart.topings.reduce(function(accumulator, currentValue) {
+                  //   return accumulator + currentValue.age;
+                  // }, 0)
+                  // ==============================================not function
+
+                  Object.keys(cart.topings).map((index) => 
+                    {
+                      totaltemp = [...totaltemp ,cart.topings[index].price];
+                      console.log("total temp",totaltemp);
+                    }
+                  )
+                )
+              )
+            )
+          }
+          <NumberFormat 
+              value={total} 
+              displayType={'text'} 
+              thousandSeparator={true} 
+              prefix={'Rp. '} 
+              renderText={
+                value => <p className="text-danger"> {value}</p>
+              } />
           <img src={Trash} alt="Remove" ></img> 
         </Col>
       </Row>

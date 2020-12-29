@@ -29,6 +29,8 @@ const Detail = () => {
 
     const [product, setProduct] = useState([]);
     const [topings, setTopings] = useState([]);
+    const [total, setTotal] = useState(0);
+    
 
     let {id} = useParams();
 
@@ -56,24 +58,13 @@ const Detail = () => {
         fetchTopings();
     }, []);
 
-    // console.log("asdf :" ,topings);
+    useEffect(() => {
+            let priceList = state.isToping.map((prices) => parseInt(prices.price))
+            let sum = priceList.reduce((a,b) => a + b, 0)
+            let sumTotal = product.price + sum
+            setTotal(sumTotal)
+    }, [state.isToping])
 
-    const handleAddTopings = (id) => {
-
-        if (state.isLogin) {            
-            // const filterTopingById = Topings.find(toping => toping.id === id);
-            // let x = document.getElementById(id).checked
-            // console.log("x", x)
-
-            dispatch({
-                type : "ADD_TOPING",
-                payload : id
-            });
-        }else{
-            alert('Please Login or Register')
-        }
-
-    }
 
     const handleSubmitOrder = async (e) => {
         e.preventDefault();
@@ -84,16 +75,26 @@ const Detail = () => {
 
         await dispatch({
             type : "ADD_CART",
-            payload : id
+            payload : id//idproduk 
         });
 
         await dispatch({
-                type : "REMOVE_TOPINGS"
-            });
+            type : "REMOVE_TOPINGS"
+        });
             router.push('/cart');
         
         // alert(id);
     }
+
+    // ketika keluar dari halaman detail, seluruh toping yang belum di tambahkan ke cart akan hilang
+    useEffect(() => {        
+        return async () => {
+            await dispatch({
+                type : "USER_LOADED",
+                payload : state
+            });
+        }
+    }, [])
 
     return !product ? (<Loading /> ) :
     (
@@ -126,7 +127,7 @@ const Detail = () => {
                                 <Row className="d-flex flex-wrap">
                                         {topings.map((toping) => (
                                             <Col md="3">
-                                                <ItemToping key={toping.id} toping={toping} handleAddTopings={handleAddTopings}/>
+                                                <ItemToping key={toping.id} toping={toping} />
                                             </Col>
                                         )).reverse()
                                     }
@@ -138,7 +139,10 @@ const Detail = () => {
                                     </Col>
                                     <Col md="6" className="detail-count-result-price text-right">
                                         <NumberFormat 
-                                            value={product.price} 
+                                            value={
+                                                state.isToping.length === 0 ? product.price 
+                                                : total
+                                            }  
                                             displayType={'text'} 
                                             thousandSeparator={true} 
                                             prefix={'Rp. '} 
