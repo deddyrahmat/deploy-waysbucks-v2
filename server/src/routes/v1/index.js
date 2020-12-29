@@ -79,7 +79,7 @@ router.delete('/toping/:id',authentication , adminAuth, deleteToping);
 // route transaction
 router.get('/transactions',authentication,getTrasactions);
 router.get('/transaction/:id',authentication,getDetailTransaction);
-router.post('/transaction',authentication,createTransaction);
+router.post('/transaction',authentication,uploadFile("photo"),createTransaction);
 router.delete('/transaction/:id',authentication,adminAuth,deleteTransaction);
 router.get('/my-transaction',authentication,myTransaction);
 router.patch('/transaction/:id',authentication,updateTransaction);

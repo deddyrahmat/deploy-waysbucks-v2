@@ -1,5 +1,5 @@
 import React,{Fragment, useContext, useState, useEffect} from 'react'
-import { Col, Row } from 'reactstrap';
+import { Col, Row, Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import FormCart from '../../components/Home/FormCart';
 import OrderCart from '../../components/Home/OrderCart';
 import Navigation from '../../components/Navigations';
@@ -23,6 +23,9 @@ const Cart = () => {
 
     const [total, setTotal] = useState(0);//untuk menyimpan data total belanja
 
+    // image transactions
+    const [image, setImage] = useState({ preview: "", raw: "" });
+
 
     useEffect(() => {
         // proses untuk melakukan seleksi array yang hanya diinginkan
@@ -45,14 +48,35 @@ const Cart = () => {
     // proses pencarian total belanja keseluruhan
     useEffect(() => {
         if (subTotal !== null) {   
-            let sum = subTotal * state.carts.length
+            // let sum = subTotal * state.carts.length
+            let sum = subTotal * 1
             setTotal(sum);
+            dispatch({
+                type : "INCOME",
+                payload : sum
+            })
         }
     
     }, [subTotal, state.carts])
 
-    console.log("hasil subTotal : ", sub);
-    console.log("hasil subOrder : ", subTotal);
+
+    // ======================================================
+    // handle image transaction
+    // ======================================================
+    const handleImageTransaction = (e) => {
+        if (e.target.files.length) {
+        setImage({
+            preview : URL.createObjectURL(e.target.files[0]),
+            raw : e.target.files[0]
+        })
+        }
+    }
+
+    // console.log("image up",image );
+    // ======================================================
+    // handle image transaction
+    // ======================================================
+    console.log("total awal",total);
     return (
         <Fragment>
             <Navigation />
@@ -77,7 +101,10 @@ const Cart = () => {
                                 </Row>
                                 <Row>
                                     <Col md="6"><span className="text-danger">Qty</span></Col>
-                                    <Col md="6" className="text-right"> <span className="text-danger">{state.carts.length}</span></Col>
+                                    <Col md="6" className="text-right"> <span className="text-danger">
+                                        {/* {state.carts.length} */}
+                                        1
+                                    </span></Col>
                                 </Row>
                                 
                                 <hr className="border-danger"></hr>
@@ -87,13 +114,44 @@ const Cart = () => {
                                     <Col md="6" className="text-right"> <span className="text-danger">{total}</span></Col>
                                 </Row>
                             </Col>
-                            <Col md="5" >
-                                <img src={attach} alt="attach file" className="img-fluid float-right"></img>
+                            <Col md="5" className="text-center">
+                                <Label className="attachment-transaction">
+                                    <Input className="d-none" type="file" placeholder="Photo Product" onChange={handleImageTransaction} />
+                                    {/* <p className="file-title"> Photo Product </p> */}
+                                    <img src={attach} alt="attach file" className="img-fluid float-right"></img>                
+                                </Label>
+                                {
+                                    image.preview && (
+                                        <img src={image.preview} alt="attach file" width="50px" className="text-center" onChange={handleImageTransaction}></img>
+                                    )
+                                }
+                                {/* <img src={attach} alt="attach file" className="img-fluid float-right" onChange={handleImageTransaction}></img> */}
                             </Col>
                         </Row>
                     </Col>
                     <Col md="4">
-                        <FormCart btn_auth="btn-auth" btn_formAuth="btn-formAuth" btn_clickAuth="btn-clickAuth" />
+                        {/* <Form>
+                            <FormGroup>
+                                <Input type="text" name="fullname" id="fullname" placeholder="fullname" className="btn-formAuth" />
+                            </FormGroup>
+                            <FormGroup>
+                                <Input type="email" name="email" id="email" placeholder="Email" className="btn-formAuth" />
+                            </FormGroup>
+                            <FormGroup>
+                                <Input type="text" name="phone" id="phone" placeholder="Phone" className="btn-formAuth" />
+                            </FormGroup>
+                            <FormGroup>
+                                <Input type="text" name="poscode" id="poscode" placeholder="Pos Code" className="btn-formAuth" />
+                            </FormGroup>
+                            <FormGroup>
+                                <Input type="textarea" name="address" id="address" placeholder="Address" className="btn-formAuth" />
+                            </FormGroup>
+                            
+                            <Button block color="danger" className="btn-clickAuth">Pay</Button>
+                        </Form> */}
+
+                        <FormCart btn_auth="btn-auth" btn_formAuth="btn-formAuth" btn_clickAuth="btn-clickAuth" image={image} />
+                        
                     </Col>
                 </Row>
             </div>

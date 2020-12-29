@@ -14,7 +14,7 @@ const initialState = {
     isToping : [],//menyimpan data toping setelah memilih produk
     descTopings : [], //menyimpan seluruh data toping untuk produk tertentu
     carts : [],
-    totalCart : [],
+    totalIncome : 0,
     subTotal : [],
     isLoading : true// cek ketersedian token
 }
@@ -51,26 +51,6 @@ const reducer = (state, action) => {
                 isToping : []
             }
         case "ADD_CART" :
-
-            // cek apakah toping ini sudah dibeli
-            // const filterProduct = state.carts.filter(product => product.id === action.payload.id);
-
-            // jika sudah ada di cart, maka tambaha qty nya saja
-            // if (filterProduct.length > 0) {
-            //     return {
-            //     ...state,
-            //     carts: state.carts.map((product) =>
-            //         product.id === action.payload.id
-            //         ? {
-            //             ...product,
-            //             qty: product.qty + 1,
-            //             }
-            //         : product
-            //     ),
-            //     };
-            // }
-
-            // jika belum ada product ini di cart, tambahkan product kedalam cart
             return {
                 ...state,
                 carts : [
@@ -91,38 +71,17 @@ const reducer = (state, action) => {
                 ]
 
             }
+        case "INCOME" :
+            return{
+                ...state,
+                totalIncome : payload
+
+            }
         case "IMG_PREVIEW" :
             return {
                 ...state,
                 previewImage : payload
             }
-
-        // case "GET_TOTAL_CART":
-        // if (state.carts.length > 0) {
-        //     let subtotal = 0;
-
-        //     state.carts.map(cart => 
-        //         subtotal = cart.amount
-        //         // {
-        //         //     if (Object.keys(cart.topings).length > 0) {
-        //         //         Object.keys(cart.topings).map((index) => 
-        //         //             {
-        //         //                 subtotal += +cart.topings[index].price;
-        //         //             }
-        //         //         )
-        //         //     }
-        //         // } 
-        //     )
-        //     return {
-        //     ...state,
-        //     totalCart: subtotal ,
-        //     };
-        // } else {
-        //     return {
-        //     ...state,
-        //     totalCart: initialState.totalCart,
-        //     };
-        // }
 
         case "USER_LOADED":
         return {

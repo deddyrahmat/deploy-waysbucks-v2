@@ -2,6 +2,8 @@ const {User, Transaction, Product, TransactionProduct, TransactionToping, Toping
 
 const Joi = require("joi");
 
+const cloudinary = require("../../../middleware/cloudinary");
+
 // output error
 const resError = (err,res) => {
     console.log(err);
@@ -158,57 +160,23 @@ exports.createTransaction = async (req,res) => {
         //body ada pada request
         //files = array of object / hanya didapat jika melewati upload middleware
 
-        const {body} = req;
-        // const {body,files} = req;
+        const {body,files} = req;
+        console.log("body",body);
+        console.log("product body",body.products);
+        console.log("product body tipe",typeof(body.products));
+        console.log("files",files);
+
         // const fileName = files.photo[0].filename
 
         const schema = Joi.object({
             name : Joi.string().min(1).required(),
             email : Joi.string().email().required(),
-            phone : Joi.string().min(11).max(14).required(),
+            phone : Joi.number().min(10).required(),
             address : Joi.string().required(),
             posCode : Joi.string().min(1).max(6).required(),
-            attachment : Joi.string().required(),
-            status : Joi.string().required(),
             income : Joi.number().integer().required(),
-            products : Joi.array()
+            products : Joi.required()
         });
-
-        // console.log(req.user);
-        
-        const { name, email, phone, address, posCode, attachment, status, income, products, topings } = body;
-        const { id: userId } = req.user;
-        const transaction = await Transaction.create({
-            userId,
-            name,
-            email,
-            phone,
-            address,
-            posCode,
-            attachment,
-            status: "Waiting Approve",
-            income
-        });
-
-        products.map(async (product) => {
-            // console.log("hasil produk : " +product.amount);// id transaksi terbaru : "+ transaction.id
-            const { id, amount } = product;
-            const addTransactionProduct = await TransactionProduct.create({
-                transactionId : transaction.id,
-                productId : id,
-                amount : amount
-            })
-            
-            
-            // console.log(product.topings);
-            let dataTopings = product.topings;
-            dataTopings.map(async (toping) => {
-                await TransactionToping.create({
-                    transactionProductId : addTransactionProduct.id,
-                    topingId : toping.id
-                })
-            })
-        })
 
         const { error } =schema.validate(body, {
             // option untuk menmapilkan pesan error lebih dari 1
@@ -223,6 +191,51 @@ exports.createTransaction = async (req,res) => {
                 }
             })
         }
+
+        // // console.log(req.user);
+        
+        const { products } = body;
+        
+        const { id: userId } = req.user;
+
+        const result = await cloudinary.uploader.upload(files.photo[0].path);//harus path karna menangkap data path saja
+
+        const transaction = await Transaction.create({...body, userId, attachment: result.secure_url,status: "Waiting Approve", cloudinary_id: result.public_id, });
+        // const transaction = await Transaction.create({
+        //     userId,
+        //     name,
+        //     email,
+        //     phone,
+        //     address,
+        //     posCode,
+        //     attachment,
+        //     status: "Waiting Approve",
+        //     income
+        // });
+
+        JSON.parse(products).map(async (product) => {
+            // console.log("hasil produk : " +product.amount);// id transaksi terbaru : "+ transaction.id
+            const { id, amount } = product;
+            const addTransactionProduct = await TransactionProduct.create({
+                transactionId : transaction.id,
+                productId : id,
+                amount : amount
+            })
+            
+            
+            // console.log(product.topings);
+            const {topings} = product;
+            console.log("toping dari produk cart", topings);
+            topings.map(async (toping) => {
+                Object.keys(toping).map(async (item) => {
+                    console.log("item toping ", toping[item]);
+                    await TransactionToping.create({
+                        transactionProductId : addTransactionProduct.id,
+                        topingId : toping[item].id
+                    })
+                })
+            })
+        })
 
         // menampilkan data product yang dibeli
         const transactionAfterAdd = await Transaction.findOne({
