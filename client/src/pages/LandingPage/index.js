@@ -1,17 +1,15 @@
 import React, { Fragment,useEffect, useState } from 'react';
 
-import {API} from "../../config/API/index";
 // import axios from "axios";
-
-
 import { Link } from 'react-router-dom';
-
 import { Col, Row } from 'reactstrap';
 
 // component
 import Header from '../../components/Home/Header'
 import Orders from '../../components/Home/Orders';
 import Navigation from '../../components/Navigations'
+import {API} from "../../config/API/index";
+import Loading from "../../components/Loading";
 
 import "./LandingPage.scss";
 
@@ -19,6 +17,7 @@ const LandingPage = () => {
 
     const [productsItems, setProducts] = useState([]);
 
+    const [loading, setLoading] = useState(true);
 
     const fetchProducts = async ( ) => {
         
@@ -26,7 +25,12 @@ const LandingPage = () => {
 
         const response = await API("/products");
 
-        setProducts(response.data.data.products);
+        if (response.status == 200) {
+            setProducts(response.data.data.products);
+            setLoading(false)
+            
+        }
+
     }
 
     // useEffect adalah lifecicle untuk stateless component
@@ -35,9 +39,10 @@ const LandingPage = () => {
         fetchProducts();
     }, [])//saat menuliskan dependency [] kosong maka pemanggilan api hanya dilakukan sekali saja
 
-    console.log("produ" , productsItems);
 
-    return (
+    console.log("ta",productsItems);
+    return loading ? <Loading /> :
+    (
         <Fragment>
             <Navigation />
                 <div className="mt-4 container-landing">

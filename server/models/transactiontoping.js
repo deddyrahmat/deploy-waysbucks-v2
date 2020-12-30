@@ -15,7 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         as : "topings", foreignKey: 'TransactionProductId'
       });
 
-      TransactionToping.belongsTo(models.Toping);
+      TransactionToping.belongsTo(models.Toping,{
+        as : "toping"
+      });
     }
   };
   TransactionToping.init({

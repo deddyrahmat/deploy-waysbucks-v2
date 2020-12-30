@@ -92,15 +92,11 @@ const OrderCart = ({props, cart}) => {
     // let priceList = state.isToping.map((prices) => parseInt(prices.price))
     let sum = totaltemp.reduce((a,b) => a + b, 0)
     let sumTotal = itemOrder.price + sum
-    // dispatch({
-    //   type : "SUB_TOTAL",
-    //   payload : parseInt(sumTotal)
-    // });  
     setTotal(sumTotal);
     
   }, [itemOrder.price])
 
-  let totalSubOrder = [];
+  // let totalSubOrder = [];
   useEffect(() => {
     console.log("total temp totalSubOrder",totaltemp);
     // let priceList = state.isToping.map((prices) => parseInt(prices.price))

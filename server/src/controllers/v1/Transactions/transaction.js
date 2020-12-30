@@ -201,18 +201,7 @@ exports.createTransaction = async (req,res) => {
         const result = await cloudinary.uploader.upload(files.photo[0].path);//harus path karna menangkap data path saja
 
         const transaction = await Transaction.create({...body, userId, attachment: result.secure_url,status: "Waiting Approve", cloudinary_id: result.public_id, });
-        // const transaction = await Transaction.create({
-        //     userId,
-        //     name,
-        //     email,
-        //     phone,
-        //     address,
-        //     posCode,
-        //     attachment,
-        //     status: "Waiting Approve",
-        //     income
-        // });
-
+        
         JSON.parse(products).map(async (product) => {
             // console.log("hasil produk : " +product.amount);// id transaksi terbaru : "+ transaction.id
             const { id, amount } = product;
@@ -391,8 +380,9 @@ exports.myTransaction = async (req,res) => {
                 userId : id
             },
             attributes: {
-                exclude: ["userId","createdAt", "updatedAt","UserId"],
+                exclude: ["userId", "updatedAt","UserId"],
             },
+            order: [["createdAt", "DESC"]], 
             include : [
                 {
                     attributes: {
@@ -425,7 +415,8 @@ exports.myTransaction = async (req,res) => {
                                     attributes: {
                                         exclude: ["transactionProductId","topingId","TransactionProductId","TopingId","createdAt", "updatedAt"],
                                     },
-                                    model : Toping
+                                    model : Toping,
+                                    as:"toping"
                                 }
                             ]
                         }
