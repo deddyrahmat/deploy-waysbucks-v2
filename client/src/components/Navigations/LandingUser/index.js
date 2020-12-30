@@ -39,15 +39,23 @@ const LandingUser = () => {
     return (
         <Fragment>
             <NavItem className="mt-2">
-                <NavLink tag={Link} to="/cart">
-                    <img src={IconCart} alt="Icon Cart" width="30px"></img>
-                    <span>{state.carts.length}</span>
-                </NavLink>
+              {
+                state.carts.length > 0 ? (
+                  <NavLink tag={Link} to="/cart">
+                      <img src={IconCart} alt="Icon Cart" width="30px"></img>
+                      <span>{state.carts.length}</span>
+                  </NavLink>
+                ) : (
+                  <NavLink>
+                      <img src={IconCart} alt="Icon Cart" width="30px"></img>
+                  </NavLink>
+                )
+              }
             </NavItem>
 
             <UncontrolledDropdown nav inNavbar className="mt-2">
               <DropdownToggle nav caret>
-                <img src={AvatarUser} alt="Icon Cart" width="30px"></img>
+                <img src={AvatarUser} alt="Icon Cart" width="30px" className="rounded-circle"></img>
                 <span className="mx-2 font-weight-bold">{state.fullname}</span>
               </DropdownToggle>
               <DropdownMenu right className="dropdown-size">

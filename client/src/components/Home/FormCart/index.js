@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext } from 'react'
-import { Button, Form, FormGroup, Input } from 'reactstrap'
+import { Button, Form, FormGroup, Input, Modal, ModalBody } from 'reactstrap'
 import { useHistory } from 'react-router-dom';
 
 // component
@@ -75,9 +75,9 @@ const FormCart = (props) => {
         
         const response = await API.post("/transaction", body, config);
         if (response.status == 200) {
+          setModalTransaction(true);
           dispatch({
-            type : "USER_LOADED",
-            payload : state
+            type : "REMOVE_CARTS"
           })
 
           setLoading(false);
@@ -90,8 +90,12 @@ const FormCart = (props) => {
     }
   }
 
-  console.log("preview", preview);
-  console.log("change order", pay);
+  // modal Transaction
+  const [modalTransaction, setModalTransaction] = useState(false);    
+  const toggleTransaction = () => setModalTransaction(!modalTransaction);
+  // modal Transaction
+
+
     return (
         <Fragment>
             <Form onSubmit={handlePay}>
@@ -113,6 +117,13 @@ const FormCart = (props) => {
                   
                   <Button block color="danger" type="submit" className={props.btn_clickAuth}>Pay</Button>
                 </Form>
+
+                {/* ========================== Modal Cancel Transaction =============================== */}
+                <Modal isOpen={modalTransaction} toggle={toggleTransaction}>
+                  <ModalBody>
+                    <h3>Thank you for ordering in us, please wait to verify you order</h3>
+                  </ModalBody>
+                </Modal>
         </Fragment>
     )
 }

@@ -149,7 +149,7 @@ const OrderCart = ({props, cart}) => {
         </Col>
         <Col md="7">
           <p className="order-cart-title-product">{itemOrder.name}</p>
-          <p className="order-cart-title-product">{amount}</p>
+          {/* <p className="order-cart-title-product">{amount}</p> */}
           <p className="order-cart-toping">Toping :
           {/* <span className="order-cart-list-toping">: apa</span> */}
           {

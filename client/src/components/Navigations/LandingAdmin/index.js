@@ -30,7 +30,7 @@ const LandingAdmin = () => {
         <Fragment>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                <img src={AvatarUser} alt="Icon Cart" width="40px"></img>
+                <img src={AvatarUser} alt="Icon Cart" width="40px" className="rounded-circle"></img>
               </DropdownToggle>
               <DropdownMenu right className="dropdown-size">
                 <DropdownItem className="dropitem-navigation" tag={Link} to="/product">

@@ -2,7 +2,8 @@
 // buat conts untuk menentukan status login user
 
 import React, { Fragment,useState,useContext } from 'react'
-import {AppContext} from "../../context/appContext";
+import {  useHistory} from "react-router-dom";
+
 
 import {
   Collapse,
@@ -14,6 +15,7 @@ import {
 } from 'reactstrap';
 
 // component
+import {AppContext} from "../../context/appContext";
 import LandingGuest from './LandingGuest'
 import Logo from "../../assets/img/logo/Logo.png";
 import LandingUser from './LandingUser';
@@ -28,6 +30,8 @@ import { Link } from 'react-router-dom';
 
 const Navigation = (props) => {
 
+  const router = useHistory();
+
   // handle context global
   const [state] = useContext(AppContext);
 
@@ -36,6 +40,13 @@ const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+
+  // kondisi utnuk antisipasi user untuk bypass url
+  // if (state.isLogin) {
+  //       router.push('/home')
+  //   }else{
+  //       router.push('/')    
+  //   }
 
   console.log(state);
   const loged = () => {

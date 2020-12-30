@@ -82,6 +82,6 @@ router.get('/transaction/:id',authentication,getDetailTransaction);
 router.post('/transaction',authentication,uploadFile("photo"),createTransaction);
 router.delete('/transaction/:id',authentication,adminAuth,deleteTransaction);
 router.get('/my-transaction',authentication,myTransaction);
-router.patch('/transaction/:id',authentication,updateTransaction);
+router.patch('/transaction',authentication,updateTransaction);
 
 module.exports= router;

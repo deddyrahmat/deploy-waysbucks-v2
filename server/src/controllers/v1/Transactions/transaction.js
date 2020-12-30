@@ -54,7 +54,8 @@ exports.getTrasactions = async (req, res) => {
                                     attributes: {
                                         exclude: ["transactionProductId","topingId","TransactionProductId","TopingId","createdAt", "updatedAt"],
                                     },
-                                    model : Toping
+                                    model : Toping,
+                                    as : "toping"
                                 }
                             ]
                         }
@@ -120,7 +121,8 @@ exports.getDetailTransaction = async (req,res) => {
                                     attributes: {
                                         exclude: ["transactionProductId","topingId","TransactionProductId","TopingId","createdAt", "updatedAt"],
                                     },
-                                    model : Toping
+                                    model : Toping,
+                                    as : "toping"
                                 }
                             ]
                         }
@@ -271,12 +273,13 @@ exports.createTransaction = async (req,res) => {
 exports.updateTransaction = async (req, res) => {
     try {
         // tangkap id dari req params
-        const {id} = req.params;
+        // const {id} = req.params;
         
         // tangkap seluruh inputan user
         const {body} = req;
 
         const schema = Joi.object({
+            id : Joi.required(),
             status : Joi.string().required()
         });
 
@@ -293,6 +296,10 @@ exports.updateTransaction = async (req, res) => {
                 }
             })
         }
+        
+        const {id} = body
+
+        console.log('id transaction',id);
 
         const getTransactionById = await Transaction.findOne({
             where : {

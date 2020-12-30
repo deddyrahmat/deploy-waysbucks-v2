@@ -62,6 +62,11 @@ const reducer = (state, action) => {
                     }
                 ]
             }
+        case "REMOVE_CARTS" :
+            return {
+                ...state,
+                carts : []
+            }
         case "SUB_TOTAL" :
             return{
                 ...state,
