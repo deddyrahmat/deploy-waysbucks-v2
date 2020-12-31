@@ -40,51 +40,6 @@ const OrderCart = ({props, cart}) => {
   // =======================================================
   // product
   // =======================================================
-  
-  // Data Toping
-  // useEffect(() => {
-  //   state.carts.map(cart => 
-  //     itemOrder.id == cart.id && (
-  //       Object.keys(cart.topings).length > 0 && (
-
-  //         Object.keys(cart.topings).map((index) => 
-  //           setItemOrderToping(cart.topings[index])
-  //           // <span className="order-cart-list-toping"> {(cart.topings[index].name)}</span>
-  //         )
-  //       )
-  //     )
-  //   )
-  // }, [itemOrder])
-
-
-  // console.log("data toping", itemOrderToping);
-
-  // =======================================================
-  // SubTotal
-  // =======================================================
-  // useEffect(() => {
-  //   state.carts.map(cart => {
-  //       if (itemOrder.id == cart.id) {
-  //         if (Object.keys(cart.topings).length > 0) {
-  //           Object.keys(cart.topings).map((index) => {
-  //             let priceList = parseInt(cart.topings[index].price)
-  //             // const total = Object.values(add).reduce((t, n) => t + n)
-  //             // const total = Object.values(priceList).reduce((t, n) => t + n)
-  //               let sum = Object.values(priceList).reduce((t, n) => t + n)
-  //               let sumTotal = itemOrder.price + sum
-  //               setTotal(sumTotal)
-  //             }
-  //             // <span className="order-cart-list-toping"> {(cart.topings[index].name)}</span>
-  //           )
-  //         }
-  //       }
-  //     }
-  //   )
-  // }, [itemOrder.id])
-  // =======================================================
-  // SubTotal
-  // =======================================================
-
 
   let totaltemp = [];
   useEffect(() => {
@@ -114,26 +69,25 @@ const OrderCart = ({props, cart}) => {
     
   }, [itemOrder.price])
 
-  // const nilai = [];
-  // useEffect(() => {
-    
-  //   if (total > 0 && typeof(total) == Number) {
-  //     console.log("muncul gak?");
-  //     // nilai = ;
-  //     setSubTotal([...subTotal,total]);
-  //   }
-  // }, [total,subTotal])
-
-  // useEffect(() => {
-  //   dispatch({
-  //     type: "GET_TOTAL_CART",
-  //   });
-  // }, [dispatch]);
-    
     console.log("type total",typeof(total));
     console.log("total",total);
     console.log("tes",state);
-    // console.log("sub total ",subTotal);
+    
+    // =================================================
+    // handle remove cart item
+    // =================================================
+    
+    const handleRemoveCart = () => {
+      console.log("id cart",id);
+      dispatch({
+        type: "REMOVE_CART",
+        payload: id
+      });
+    };
+
+    // =================================================
+    // handle remove cart item
+    // =================================================
     
 
   return (
@@ -173,13 +127,6 @@ const OrderCart = ({props, cart}) => {
               itemOrder.id == cart.id && (
                 Object.keys(cart.topings).length > 0 && (
 
-                  // ==============================================not function
-                  // cart.topings.reduce((acc, obj) => acc + obj.score, 0)
-                  // cart.topings.reduce(function(accumulator, currentValue) {
-                  //   return accumulator + currentValue.age;
-                  // }, 0)
-                  // ==============================================not function
-
                   Object.keys(cart.topings).map((index) => 
                     {
                       totaltemp = [...totaltemp ,cart.topings[index].price];
@@ -198,7 +145,7 @@ const OrderCart = ({props, cart}) => {
               renderText={
                 value => <p className="text-danger"> {value}</p>
               } />
-          <img src={Trash} alt="Remove" ></img> 
+          <img src={Trash} alt="Remove" onClick={handleRemoveCart}></img> 
         </Col>
       </Row>
     </Fragment>

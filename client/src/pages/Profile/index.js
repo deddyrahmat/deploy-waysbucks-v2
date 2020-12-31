@@ -166,7 +166,7 @@ const Profile = () => {
                         </Col>
                     </Row>
                 </div>
-                {/* ========================== Modal Cancel Transaction =============================== */}
+                {/* ========================== Modal Accepted Transaction =============================== */}
                 <Modal isOpen={modalAccepted} toggle={toggleAccepted}>
                 <ModalBody>
                     <h3>Transaction Success, Thank You For Order</h3>

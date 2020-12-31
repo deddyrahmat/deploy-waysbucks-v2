@@ -32,6 +32,7 @@ const FormCart = (props) => {
 
   const handlePay = async (e) => {
     e.preventDefault();
+    // setModalTransaction(true);
 
     const {
       fullname,
@@ -42,7 +43,6 @@ const FormCart = (props) => {
     }  = pay;
 
     try {
-
       const products = JSON.stringify(
         state.carts.map((product) => {
           return { 
@@ -75,25 +75,35 @@ const FormCart = (props) => {
         
         const response = await API.post("/transaction", body, config);
         if (response.status == 200) {
-          setModalTransaction(true);
+          console.log("berhasil");
           dispatch({
-            type : "REMOVE_CARTS"
+            type : "RESET_CARTS",
           })
-
           setLoading(false);
+          setModalAccepted(true);
+          setModalTransaction(true);
+          
         }
-
+        
         // karna setelah diupload datanya tidak langsung muncul di page home, maka ku arahkan ke landing page agar di refresh dan diarahkan ke dashboard
-        router.push("/profile")
+        if (modalTransaction !== true) {
+          router.push("/profile")          
+        }
     } catch (err) {
       console.log(" your system error : ",err);
     }
   }
 
+
   // modal Transaction
   const [modalTransaction, setModalTransaction] = useState(false);    
   const toggleTransaction = () => setModalTransaction(!modalTransaction);
   // modal Transaction
+
+  // modal Accepted
+        const [modalAccepted, setModalAccepted] = useState(false);    
+        const toggleAccepted = () => setModalAccepted(!modalAccepted);
+        // modal Accepted
 
 
     return (
@@ -118,11 +128,18 @@ const FormCart = (props) => {
                   <Button block color="danger" type="submit" className={props.btn_clickAuth}>Pay</Button>
                 </Form>
 
-                {/* ========================== Modal Cancel Transaction =============================== */}
+                {/* ========================== Modal Transaction =============================== */}
                 <Modal isOpen={modalTransaction} toggle={toggleTransaction}>
                   <ModalBody>
-                    <h3>Thank you for ordering in us, please wait to verify you order</h3>
+                    <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal"}}>Thank you for ordering in us, please wait to verify you order</p>
                   </ModalBody>
+                </Modal>
+
+                {/* ========================== Modal approve Transaction =============================== */}
+                <Modal isOpen={modalAccepted} toggle={toggleAccepted}>
+                <ModalBody>
+                    <h3>Transaction Success, Thank You For Order</h3>
+                </ModalBody>
                 </Modal>
         </Fragment>
     )

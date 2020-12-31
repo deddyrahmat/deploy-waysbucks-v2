@@ -62,7 +62,15 @@ const reducer = (state, action) => {
                     }
                 ]
             }
-        case "REMOVE_CARTS" :
+        case "REMOVE_CART":
+            console.log("hasil remove"+payload);
+            return {
+                ...state,
+                carts: state.carts.filter(
+                (product) => product.id !== payload
+                ),
+            };
+        case "RESET_CARTS" :
             return {
                 ...state,
                 carts : []
