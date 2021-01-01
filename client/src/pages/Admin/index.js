@@ -239,7 +239,7 @@ const Admin = (props) => {
         {/* ========================== Modal Cancel Transaction =============================== */}
         <Modal style={{marginTop:"200px"}} isOpen={modalCancel} toggle={toggleCancel}>
           <ModalBody>
-            <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Cancel Transaction Success</p>
+            <p style={{color:"#c70039", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Cancel Transaction Success</p>
           </ModalBody>
         </Modal>
 

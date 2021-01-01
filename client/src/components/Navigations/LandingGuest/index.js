@@ -42,12 +42,10 @@ const LandingGuest = () => {
   const handleChangeLogin = (e) => {
     setFormDataLogin({ ...formDataLogin, [e.target.name]: e.target.value });
   }
-  
 
-  const handleSubmitLogin = async (e) => {
-      e.preventDefault();
 
-      try {
+  const login = async (email, password) => {
+    
         const body = JSON.stringify({ email, password });
 
         const config = {
@@ -73,6 +71,15 @@ const LandingGuest = () => {
         }else if (result.role === "admin") {
           router.push("/admin")
         }
+  }
+  
+
+  const handleSubmitLogin = async (e) => {
+      e.preventDefault();
+
+      try {
+        // const { email, password } = formDataLogin;
+        login(email, password);
         
       } catch (err) {
         console.log(err);
@@ -117,21 +124,25 @@ const LandingGuest = () => {
         const response = await API.post("/register", body, config);
         
         if (response.status === 200 ) {
+
+          login(email, password);
+
+          // ===============================================================
           
-          // const responseLogin = await API.post("/login", bodyLogin, config);
-          console.log("respon regis : "+response);
-          // console.log(responseLogin);          
+          // // const responseLogin = await API.post("/login", bodyLogin, config);
+          // console.log("respon regis : ",response);
+          // // console.log(responseLogin);          
           
-          let result = response.data.data;
-          result.role = "user";
-          dispatch({
-            type:"LOGIN",
-            payload : result
-          })
+          // let result = response.data.data;
+          // result.role = "user";
+          // dispatch({
+          //   type:"LOGIN",
+          //   payload : result
+          // })
           
-          setAuthToken(result.token);
+          // setAuthToken(result.token);
           
-          router.push("/");
+          // router.push("/");
         }else{
           console.log(response.status)
         }
@@ -218,7 +229,7 @@ const LandingGuest = () => {
       {/* ========================== Modal =============================== */}
       <Modal style={{marginTop:"200px"}} isOpen={modalFailed} toggle={toggleFailed}>
         <ModalBody>
-          <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Login Failed</p>
+          <p style={{color:"#c70039", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Login Failed</p>
         </ModalBody>
       </Modal>
     </Fragment>

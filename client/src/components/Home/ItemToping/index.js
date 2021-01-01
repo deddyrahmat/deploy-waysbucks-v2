@@ -23,72 +23,60 @@ const ItemTopings = ({props,toping,handleAddTopings}) => {
 
   // console.log('did : '+id)
 
-  const handleToping = async (price, id, name) => {
-    if (state.isLogin) {            
-      // cek inputan user
-        let x = document.getElementById(name).checked
-        // console.log("x", x)
+  const handleToping = async (price, id, name) => {     
+    // cek inputan user
+      let x = document.getElementById(name).checked
+      // console.log("x", x)
 
-        // jika user menekan inputan check maka akan menghasilkan nilai true dan a akan menambah data toping
-        if(x) {
-            // const changeData = topingPrice.concat({id: id, price: price})
-            await dispatch({
-              type : "ADD_TOPING",
-              payload : {id,price, name}
-            });
-            // return setTopingPrice(...topingPrice, changeData)
-            // return setTopingPrice(changeData)
-        } else {
+      // jika user menekan inputan check maka akan menghasilkan nilai true dan a akan menambah data toping
+      if(x) {
+          // const changeData = topingPrice.concat({id: id, price: price})
+          await dispatch({
+            type : "ADD_TOPING",
+            payload : {id,price, name}
+          });
+          // return setTopingPrice(...topingPrice, changeData)
+          // return setTopingPrice(changeData)
+      } else {
 
-          let result = [];
-          // jika user menghapus pesanan toping
-          // lakukan pencarian toping, cek id dari toping yang dihapus dan hapus dari store
-          state.isToping.filter(item => {               
-                if (item.id !== id) {
-                  result = [...result, item];
-                }
-            })
-            await dispatch({
-              type : "CANCEL_TOPING",
-              payload : result
-            });            
-        }
-    }else{
-        alert('Please Login or Register')
-        router.push('/');
-    }
+        let result = [];
+        // jika user menghapus pesanan toping
+        // lakukan pencarian toping, cek id dari toping yang dihapus dan hapus dari store
+        state.isToping.filter(item => {               
+              if (item.id !== id) {
+                result = [...result, item];
+              }
+          })
+          await dispatch({
+            type : "CANCEL_TOPING",
+            payload : result
+          });            
+      }
   }
 
   console.log("status ", state);
   return (
     <div className="toping-wrapper">
-      <div className="round">
-          <label for={name}>
-            <img className="img-toping1" src={photo} alt="toping" />
-          </label> 
-          <input onChange={() => handleToping(price, id, name)} value={price} type="checkbox" id={name} />
-          <label className="label-checkbox" for={name}></label>
-      </div>
-      <div className="title-toping-wrapper">
-          <p className="title-toping">{name}</p>
-          <NumberFormat 
-              value={price} 
-              displayType={'text'} 
-              thousandSeparator={true} 
-              prefix={'Rp. '} 
-              renderText={
-                value => <p className="title-toping mt-n3">{value}</p>
-              } />
-          
-      </div>
-  </div>
-    // <Fragment>
-    //   {/* <img src={successIcon} alt="success" className="icon-success-toping"></img> */}
-    //   <figure className="figure mt-3 text-center item-toping" onClick={() => handleAddTopings(id)}>
-    //     <img src={photo} alt="toping" className="rounded-circle img-toping"></img>
-    //     <figcaption className="text-center caption-toping">{name}</figcaption>
-    //   </figure>
-    // </Fragment>
+        <div className="round">
+            <label for={name}>
+              <img className="img-toping1" src={photo} alt="toping" />
+            </label> 
+            <input onChange={() => handleToping(price, id, name)} value={price} type="checkbox" id={name} />
+            <label className="label-checkbox" for={name}></label>
+        </div>
+        <div className="title-toping-wrapper">
+            <p className="title-toping">{name}</p>
+            <NumberFormat 
+                value={price} 
+                displayType={'text'} 
+                thousandSeparator={true} 
+                prefix={'Rp. '} 
+                renderText={
+                  value => <p className="title-toping mt-n3">{value}</p>
+                } />
+            
+        </div>
+    </div>
   );
 };
 

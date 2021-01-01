@@ -47,11 +47,12 @@ const FormProduct = (props) => {
     const {nameProduct, price} = product;
     console.log("harga",price);
     console.log("harga tipe",typeof(price));
+    console.log("replace", price.replace(/,/g , ''));
 
     try {
       const body = new FormData();
       body.append("name", nameProduct);
-      body.append("price", parseInt(price));
+      body.append("price", parseInt(price.replace(/,/g , '')));
 
       if (state.previewImage !== []) {
         body.append("photo", state.previewImage)

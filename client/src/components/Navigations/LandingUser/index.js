@@ -56,7 +56,7 @@ const LandingUser = () => {
             <UncontrolledDropdown nav inNavbar className="mt-2">
               <DropdownToggle nav caret>
                 {
-                  state.avatar == '' ? (
+                  state.avatar == '' || state.avatar== 'undifined'? (
                       <img src={AvatarUser} alt="Avatar" width="30px" className="rounded-circle"></img>
                     ) : (
                       <img src={state.avatar} alt="Avatar" width="30px" height="30px" className="rounded-circle" ></img>

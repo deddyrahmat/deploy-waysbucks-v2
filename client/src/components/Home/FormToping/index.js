@@ -51,7 +51,7 @@ const FormToping = (props) => {
     try {
       const body = new FormData();
       body.append("name", nameToping);
-      body.append("price", parseInt(price));
+      body.append("price", parseInt(price.replace(/,/g , '')));
 
       if (state.previewImage !== []) {
         body.append("photo", state.previewImage)

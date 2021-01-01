@@ -6,18 +6,15 @@ import NumberFormat from 'react-number-format';
 import {API} from "../../config/API";
 
 // component
-import { Button, Card, CardImg, CardImgOverlay , Col, Row } from 'reactstrap'
+import { Button, Card, CardImg, Col, Row } from 'reactstrap'
 import ItemToping from '../../components/Home/ItemToping';
 import Navigation from '../../components/Navigations';
 
 import { AppContext } from '../../context/appContext';
 
 
-// Data Dummy Api
-// import {Topings} from "../../config/FakeData/Topings";
-
 // images
-import Logo from "../../assets/img/logo/Logo.png";
+// import Logo from "../../assets/img/logo/Logo.png";
 
 
 import "./Detail.scss";
@@ -69,9 +66,6 @@ const Detail = () => {
     const handleSubmitOrder = async (e) => {
         e.preventDefault();
         
-        if (!state.isLogin) {
-            alert('Please Login or Register')
-        }
 
         await dispatch({
             type : "ADD_CART",
@@ -81,9 +75,8 @@ const Detail = () => {
         await dispatch({
             type : "REMOVE_TOPINGS"
         });
-            router.push('/cart');
+        router.push('/cart');
         
-        // alert(id);
     }
 
     // ketika keluar dari halaman detail, seluruh toping yang belum di tambahkan ke cart akan hilang
@@ -94,7 +87,8 @@ const Detail = () => {
                 payload : state
             });
         }
-    }, [])
+    }, [state, dispatch])
+
 
     return !product ? (<Loading /> ) :
     (
@@ -105,9 +99,9 @@ const Detail = () => {
                         <Col md="5" >
                             <Card inverse>
                                 <CardImg src={product.photo} alt="Card image cap" className="detail-product-order"/>
-                                <CardImgOverlay>
+                                {/* <CardImgOverlay>
                                     <img src={Logo} alt="Logo Product" className="detail-order-logo"></img>
-                                </CardImgOverlay>
+                                </CardImgOverlay> */}
                             </Card>
                         </Col>
                         <Col md="7">
@@ -153,8 +147,9 @@ const Detail = () => {
                             </form>
                         </Col>
                     </Row>
-                    <pre>{JSON.stringify(state, null, 2)}</pre>
                 </div>
+
+                
         </Fragment>
     )
 }
