@@ -9,6 +9,7 @@ const initialState = {
     isLogin : false,
     role : "",
     fullname : "",
+    avatar : "",
     previewImage : null,
     email : "",
     isToping : [],//menyimpan data toping setelah memilih produk
@@ -104,6 +105,7 @@ const reducer = (state, action) => {
             isLoading: false,
             previewImage : null,
             role : payload.role,
+            avatar : payload.avatar,
             fullname : payload.fullname,
             email : payload.email
         };
@@ -116,6 +118,7 @@ const reducer = (state, action) => {
                 isLogin : true,
                 role : payload.role,
                 fullname : payload.fullname,
+                avatar : payload.avatar,
                 email : payload.email
             }
         case "AUTH_ERROR":

@@ -11,6 +11,9 @@ import {AppContext} from "../../context/appContext";
 // style css
 import "./Toping.scss";
 
+// images
+import IconPreview from "../../assets/img/icons/preview.png";
+
 
 const Toping = () => {
 
@@ -39,6 +42,7 @@ const Toping = () => {
     // ===============================================================
     // fitur upload image dan image preview
     // ===============================================================
+    
 
     return (
         <Fragment>
@@ -48,7 +52,7 @@ const Toping = () => {
                         <Col md="7">
                             <h3 className="title-page-product">Toping</h3>
                             {/* style css ini terletak di compnent navigation landingguest */}
-                            <FormToping btn_auth="btn-auth" btn_formAuth="btn-formAuth" title_formAuth="title-formAuth" btn_clickAuth="btn-clickAuth pay-page-product d-block mx-auto"/>
+                            <FormToping btn_auth="btn-auth" btn_formAuth="btn-formAuth w-100" title_formAuth="title-formAuth" btn_clickAuth="btn-clickAuth pay-page-product d-block mx-auto"/>
                         </Col>
                         <Col md="5" className="text-center">
                             {
@@ -64,7 +68,11 @@ const Toping = () => {
                                     />
                                 ):(
                                     <div className="add-product-img-container align-center">
-                                        <h4 className="">PREVIEW</h4>
+                                        <img
+                                            src={IconPreview}
+                                            alt="Preview-product"
+                                            className="img-fluid file-product border-preview"
+                                        />
                                     </div>
                                 )
                                 

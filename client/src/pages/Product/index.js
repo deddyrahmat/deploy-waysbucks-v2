@@ -12,7 +12,7 @@ import {AppContext} from "../../context/appContext";
 import "./Product.scss";
 
 // images
-// import IconUpload from "../../assets/img/icons/fileUpload.png";
+import IconPreview from "../../assets/img/icons/preview.png";
 
 const Product = () => {
 
@@ -52,7 +52,7 @@ const Product = () => {
                             {/* style css ini terletak di compnent navigation landingguest */}
 
                             {/* form jika beda file */}
-                            <FormProduct btn_auth="btn-auth" btn_formAuth="btn-formAuth" title_formAuth="title-formAuth" btn_clickAuth="btn-clickAuth pay-page-product d-block mx-auto"/>
+                            <FormProduct btn_auth="btn-auth" btn_formAuth="btn-formAuth w-100" title_formAuth="title-formAuth" btn_clickAuth="btn-clickAuth pay-page-product d-block mx-auto"/>
                             {/* form jika beda file */}
                         </Col>
                         <Col md="5" className="text-center">
@@ -69,7 +69,11 @@ const Product = () => {
                                     />
                                 ):(
                                     <div className="add-product-img-container align-center">
-                                        <h4 className="">PREVIEW</h4>
+                                        <img
+                                            src={IconPreview}
+                                            alt="Preview-product"
+                                            className="img-fluid file-product border-preview"
+                                        />
                                     </div>
                                 )
                                 

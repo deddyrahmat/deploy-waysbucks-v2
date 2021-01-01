@@ -237,16 +237,16 @@ const Admin = (props) => {
           </Container>
         </div>
         {/* ========================== Modal Cancel Transaction =============================== */}
-        <Modal isOpen={modalCancel} toggle={toggleCancel}>
+        <Modal style={{marginTop:"200px"}} isOpen={modalCancel} toggle={toggleCancel}>
           <ModalBody>
-            <h3>Cancel Transaction Success</h3>
+            <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Cancel Transaction Success</p>
           </ModalBody>
         </Modal>
 
         {/* ========================== Modal Cancel Transaction =============================== */}
-        <Modal isOpen={modalApprove} toggle={toggleApprove}>
+        <Modal style={{marginTop:"200px"}} isOpen={modalApprove} toggle={toggleApprove}>
           <ModalBody>
-            <h3>Approve Transaction Success</h3>
+            <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Approve Transaction Success</p>
           </ModalBody>
         </Modal>
     </Fragment>

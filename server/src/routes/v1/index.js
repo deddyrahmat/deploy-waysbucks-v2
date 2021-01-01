@@ -19,6 +19,7 @@ const {
 // controller users
 const {
     getUsers,
+    updateAvatarUser,
     deleteUser
 } = require('../../controllers/v1/Users/user');
 
@@ -60,6 +61,7 @@ router.get("/check-auth", authentication, checkAuth);
 
 // route users
 router.get('/users',authentication,getUsers);
+router.patch('/user',authentication,uploadFile("photo"),updateAvatarUser);
 router.delete('/user/:id',authentication,adminAuth,deleteUser);
 
 // route products

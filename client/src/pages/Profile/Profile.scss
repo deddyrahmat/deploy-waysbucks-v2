@@ -35,6 +35,33 @@
         font-size: 10px;
     }
 
+    .status-transaction-wait{
+        border-radius: 2px;
+        padding: 3px 24px;
+        background-color: rgba($color: #f5f372, $alpha: 0.3);
+        color: #9a9c01;
+        font-weight: 500;
+        font-size: 10px;
+    }
+
+    .status-transaction-cancel{
+        border-radius: 2px;
+        padding: 3px 24px;
+        background-color: rgba($color: #ffaf97, $alpha: 0.3);
+        color: #9c2501;
+        font-weight: 500;
+        font-size: 10px;
+    }
+
+    .status-transaction-success{
+        border-radius: 2px;
+        padding: 3px 24px;
+        background-color: rgba($color: #97f884, $alpha: 0.3);
+        color: #005c17;
+        font-weight: 500;
+        font-size: 10px;
+    }
+
     .sub-price-transaction{
         font-weight: 900;
         font-size: 10px;

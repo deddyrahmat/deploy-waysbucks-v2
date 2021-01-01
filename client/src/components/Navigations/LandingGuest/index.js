@@ -67,15 +67,16 @@ const LandingGuest = () => {
         })
 
         setAuthToken(result.token);
-
+        
         if (result.role === "user") {
           router.push("/");
         }else if (result.role === "admin") {
           router.push("/admin")
         }
-
+        
       } catch (err) {
         console.log(err);
+        setModalFailed(true)
       }
   }
 
@@ -150,6 +151,10 @@ const LandingGuest = () => {
     toggleLogin();
     toggleRegister();
   }
+
+  const [modalFailed, setModalFailed] = useState(false);
+
+  const toggleFailed = () => setModalFailed(!modalFailed);
   
 
   return (
@@ -180,7 +185,7 @@ const LandingGuest = () => {
           </NavLink>
       </NavItem>
       {/* form modal login */}
-      {/* form modal logout */}
+      {/* form modal Register */}
       <NavItem className="mt-2">
           <NavLink>
             <Button color="danger" className="btn_auth" onClick={toggleRegister}>Register</Button>
@@ -208,7 +213,14 @@ const LandingGuest = () => {
             </Modal>
           </NavLink>
       </NavItem>
-      {/* form modal logout */}
+      {/* form modal Register */}
+
+      {/* ========================== Modal =============================== */}
+      <Modal style={{marginTop:"200px"}} isOpen={modalFailed} toggle={toggleFailed}>
+        <ModalBody>
+          <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Login Failed</p>
+        </ModalBody>
+      </Modal>
     </Fragment>
   )
 }

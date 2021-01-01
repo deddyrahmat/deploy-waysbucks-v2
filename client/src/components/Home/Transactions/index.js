@@ -30,10 +30,8 @@ const Transactions = ({props, date, product}) => {
   let topingtemp = [];
   
   useEffect(() => {
-    console.log(topingtemp);
     setNameToping(topingtemp)
   }, [])
-  console.log("name toping",nameToping);
   // ==============================================
   // handle name toping
   // ==============================================
@@ -45,7 +43,6 @@ const Transactions = ({props, date, product}) => {
 let totaltemp = [];
 
 useEffect(() => {
-  console.log("total temp totalSubOrder",totaltemp);
   let sum = totaltemp.reduce((a,b) => a + b, 0)
   let sumTotal = price + sum
   
@@ -58,8 +55,6 @@ useEffect(() => {
 // handle price product
 // ==============================================
 
-  console.log("data product",product);
-  console.log("data product tanggal" ,date);
   return (
     <Fragment>
         <Col md="3">

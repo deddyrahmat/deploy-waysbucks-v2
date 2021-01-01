@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext } from 'react'
 import { Button, Form, FormGroup, Input, Modal, ModalBody } from 'reactstrap'
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 
 // component
 import Loading from "../../Loading";
@@ -29,6 +29,10 @@ const FormCart = (props) => {
   const handleChangePay = (e) => {
     setPay({...pay,  [e.target.name] : e.target.value})
   }
+
+  // function timeOut(ms) {
+  //   return new Promise((resolve) => setTimeout(resolve, ms))
+  // }
 
   const handlePay = async (e) => {
     e.preventDefault();
@@ -76,21 +80,24 @@ const FormCart = (props) => {
         const response = await API.post("/transaction", body, config);
         if (response.status == 200) {
           console.log("berhasil");
+          setLoading(false);
+          setModalTransaction(true);
           dispatch({
             type : "RESET_CARTS",
           })
-          setLoading(false);
-          setModalAccepted(true);
-          setModalTransaction(true);
           
         }
+        // setTimeout("alert('Belajar Timer JavaScript!')", 5000)
+        // timeOut(3000)
+        // router.push("/profile")          
         
         // karna setelah diupload datanya tidak langsung muncul di page home, maka ku arahkan ke landing page agar di refresh dan diarahkan ke dashboard
-        if (modalTransaction !== true) {
-          router.push("/profile")          
-        }
+        // if (modalTransaction !== true) {
+        //   router.push("/profile")          
+        // }
+        
     } catch (err) {
-      console.log(" your system error : ",err);
+      console.log(" your system error : ",err); 
     }
   }
 
@@ -100,10 +107,6 @@ const FormCart = (props) => {
   const toggleTransaction = () => setModalTransaction(!modalTransaction);
   // modal Transaction
 
-  // modal Accepted
-        const [modalAccepted, setModalAccepted] = useState(false);    
-        const toggleAccepted = () => setModalAccepted(!modalAccepted);
-        // modal Accepted
 
 
     return (
@@ -129,17 +132,15 @@ const FormCart = (props) => {
                 </Form>
 
                 {/* ========================== Modal Transaction =============================== */}
-                <Modal isOpen={modalTransaction} toggle={toggleTransaction}>
+                <Modal style={{marginTop:"200px"}} isOpen={modalTransaction} toggle={toggleTransaction} >
                   <ModalBody>
-                    <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal"}}>Thank you for ordering in us, please wait to verify you order</p>
+                    <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Thank you for ordering in us, please wait to verify you order</p>
                   </ModalBody>
-                </Modal>
-
-                {/* ========================== Modal approve Transaction =============================== */}
-                <Modal isOpen={modalAccepted} toggle={toggleAccepted}>
-                <ModalBody>
-                    <h3>Transaction Success, Thank You For Order</h3>
-                </ModalBody>
+                  {
+                    modalTransaction == false ? (
+                      <Redirect to="/profile" />
+                    ) : null
+                  }
                 </Modal>
         </Fragment>
     )

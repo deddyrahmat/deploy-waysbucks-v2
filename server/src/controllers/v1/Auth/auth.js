@@ -157,6 +157,7 @@ exports.login = async (req, res) => {
         // simpan data role dari variabel account user yang login
         const role = account.role;
         const fullname = account.fullname;
+        const avatar = account.avatar;
 
         //response login dengan token
         res.send({
@@ -166,6 +167,7 @@ exports.login = async (req, res) => {
                 chanel : {
                     email,
                     fullname,
+                    avatar,
                     token,
                     role
                 }

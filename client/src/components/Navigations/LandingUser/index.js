@@ -55,7 +55,13 @@ const LandingUser = () => {
 
             <UncontrolledDropdown nav inNavbar className="mt-2">
               <DropdownToggle nav caret>
-                <img src={AvatarUser} alt="Icon Cart" width="30px" className="rounded-circle"></img>
+                {
+                  state.avatar == '' ? (
+                      <img src={AvatarUser} alt="Avatar" width="30px" className="rounded-circle"></img>
+                    ) : (
+                      <img src={state.avatar} alt="Avatar" width="30px" height="30px" className="rounded-circle" ></img>
+                    )
+                }
                 <span className="mx-2 font-weight-bold">{state.fullname}</span>
               </DropdownToggle>
               <DropdownMenu right className="dropdown-size">

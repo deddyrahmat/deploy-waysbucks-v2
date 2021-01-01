@@ -15,12 +15,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
+    avatar: DataTypes.STRING,
     fullname: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     role: DataTypes.ENUM({
       values: ['user', 'admin']
-    })
+    }),
+    cloudinary_id: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User'

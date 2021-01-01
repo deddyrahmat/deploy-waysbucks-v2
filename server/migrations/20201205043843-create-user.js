@@ -11,6 +11,9 @@ module.exports = {
       fullname: {
         type: Sequelize.STRING
       },
+      avatar: {
+        type: Sequelize.STRING
+      },
       email: {
         type: Sequelize.STRING
       },
@@ -22,6 +25,9 @@ module.exports = {
         type: Sequelize.ENUM({
           values: ['user', 'admin']
         })
+      },
+      cloudinary_id: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

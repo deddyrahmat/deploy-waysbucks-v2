@@ -1,8 +1,9 @@
 // page add product by admin
 
 import React, { Fragment, useState, useContext } from 'react'
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
-import { useHistory } from 'react-router-dom';
+import { Button, Form, FormGroup, Input, Label, Modal, ModalBody } from 'reactstrap';
+import { useHistory, Redirect } from 'react-router-dom';
+import NumberFormat from 'react-number-format';
 
 import {AppContext} from "../../../context/appContext";
 
@@ -32,7 +33,7 @@ const FormProduct = (props) => {
     setProduct({...product,  [e.target.name] : e.target.value})
   }
   
-  console.log("nama",product.nameProduct);
+  // console.log("nama",product.nameProduct);
 
   const handleImage = (e) => {
     dispatch({
@@ -44,11 +45,13 @@ const FormProduct = (props) => {
   const handleSubmitProduct = async (e) => {
     e.preventDefault();
     const {nameProduct, price} = product;
+    console.log("harga",price);
+    console.log("harga tipe",typeof(price));
 
     try {
       const body = new FormData();
       body.append("name", nameProduct);
-      body.append("price", price);
+      body.append("price", parseInt(price));
 
       if (state.previewImage !== []) {
         body.append("photo", state.previewImage)
@@ -64,6 +67,7 @@ const FormProduct = (props) => {
         
         const response = await API.post("/product", body, config);
         if (response.status == 200) {
+          setModalSuccess(true);
           dispatch({
             type : "USER_LOADED",
             payload : state
@@ -73,12 +77,23 @@ const FormProduct = (props) => {
         }
 
         // karna setelah diupload datanya tidak langsung muncul di page home, maka ku arahkan ke landing page agar di refresh dan diarahkan ke dashboard
-        router.push("/admin")
+        // router.push("/admin")
     } catch (err) {
       console.log(" your system error : ",err);
+      setModalFailed(true);
     }
 
   }
+
+    // modal Success
+    const [modalSuccess, setModalSuccess] = useState(false);    
+    const toggleSuccess = () => setModalSuccess(!modalSuccess);
+    // modal Success
+
+    // modal Failed
+    const [modalFailed, setModalFailed] = useState(false);    
+    const toggleFailed = () => setModalFailed(!modalFailed);
+    // modal Failed
 
   return (
       <Fragment>
@@ -87,7 +102,8 @@ const FormProduct = (props) => {
               <Input type="text" name="nameProduct" id="nameProduct" placeholder="Name Product" className={props.btn_formAuth} onChange={handleChangeproduct} />
             </FormGroup>
             <FormGroup>
-              <Input type="number" name="price" id="price" placeholder="Price" className={props.btn_formAuth} onChange={handleChangeproduct} />
+              <NumberFormat thousandSeparator={true} style={{paddingLeft:"10px", paddingTop:"5px", paddingBottom:"5px"}} placeholder="Price" name="price" id="price" className={props.btn_formAuth} inputmode="numeric" onChange={handleChangeproduct} />
+              {/* <Input type="number" name="price" id="price" placeholder="Price" className={props.btn_formAuth} onChange={handleChangeproduct} /> */}
             </FormGroup>
             <Label className="file">
               <Input className="file-input" type="file" placeholder="Photo Product" onChange={handleImage} />
@@ -97,6 +113,23 @@ const FormProduct = (props) => {
             
             <Button color="danger" className={props.btn_clickAuth}>Add Product</Button>
           </Form>
+
+
+          <Modal style={{marginTop:"200px"}} isOpen={modalSuccess} toggle={toggleSuccess}>
+            <ModalBody>
+              <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Created Product Success</p>
+            </ModalBody>
+            {
+              modalSuccess == false ? (
+                <Redirect to="/admin" />
+              ) : null
+            }
+          </Modal>
+          <Modal style={{marginTop:"200px"}} isOpen={modalFailed} toggle={toggleFailed}>
+            <ModalBody>
+              <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Created Product Failed</p>
+            </ModalBody>
+          </Modal>
       </Fragment>
   )
 }

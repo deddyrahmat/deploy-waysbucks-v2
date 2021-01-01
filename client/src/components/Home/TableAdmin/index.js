@@ -224,9 +224,9 @@ const TableAdmin = ({props,transactions}) => {
 
 
       {/* ========================== Modal =============================== */}
-      <Modal isOpen={modal} toggle={toggle}>
+      <Modal style={{marginTop:"200px"}} isOpen={modal} toggle={toggle}>
         <ModalBody>
-          <h3>Cancel Transaction Success</h3>
+          <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Cancel Transaction Success</p >
         </ModalBody>
       </Modal>
     </Table>
