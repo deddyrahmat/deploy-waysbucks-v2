@@ -83,11 +83,11 @@ const Detail = () => {
     useEffect(() => {        
         return async () => {
             await dispatch({
-                type : "USER_LOADED",
+                type : "REMOVE_TOPINGS",
                 payload : state
             });
         }
-    }, [state, dispatch])
+    }, [])
 
 
     return !product ? (<Loading /> ) :
@@ -120,8 +120,8 @@ const Detail = () => {
                                 
                                 <Row className="d-flex flex-wrap">
                                         {topings.map((toping) => (
-                                            <Col md="3">
-                                                <ItemToping key={toping.id} toping={toping} />
+                                            <Col md="3" key={toping.id}>
+                                                <ItemToping  toping={toping} />
                                             </Col>
                                         )).reverse()
                                     }

@@ -15,7 +15,7 @@ import attach from "../../assets/img/icons/attachement.svg";
 const Cart = () => {
 
     const [state, dispatch] = useContext(AppContext);
-    console.log("tes cart:",state);
+    // console.log("tes cart:",state);
 
     const [sub, setSub] = useState(null);//const untuk menyimpan data array sub harga produk
 
@@ -76,7 +76,7 @@ const Cart = () => {
     // ======================================================
     // handle image transaction
     // ======================================================
-    console.log("total awal",total);
+    // console.log("total awal",total);
     return (
         <Fragment>
             <Navigation />

@@ -152,7 +152,7 @@ const Admin = (props) => {
   let no = 1;//no urut untuk tabel
 
 
-  console.log("transactions ", transactionsItems);
+  // console.log("transactions ", transactionsItems);
   return loading ? <Loading /> :
     (
     <Fragment>

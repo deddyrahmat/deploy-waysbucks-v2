@@ -48,7 +48,7 @@ const Navigation = (props) => {
   //       router.push('/')    
   //   }
 
-  console.log(state);
+  // console.log(state);
   const loged = () => {
     if (state.isLogin) {
       if(state.role === "user"){

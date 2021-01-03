@@ -127,7 +127,8 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 isLogin : false,
-                isLoading: false
+                isLoading: false,
+                carts : []
             }    
         default:
             throw new Error();

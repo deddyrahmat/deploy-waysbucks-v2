@@ -126,23 +126,6 @@ const LandingGuest = () => {
         if (response.status === 200 ) {
 
           login(email, password);
-
-          // ===============================================================
-          
-          // // const responseLogin = await API.post("/login", bodyLogin, config);
-          // console.log("respon regis : ",response);
-          // // console.log(responseLogin);          
-          
-          // let result = response.data.data;
-          // result.role = "user";
-          // dispatch({
-          //   type:"LOGIN",
-          //   payload : result
-          // })
-          
-          // setAuthToken(result.token);
-          
-          // router.push("/");
         }else{
           console.log(response.status)
         }

@@ -2,13 +2,13 @@
 
 import React, { Fragment } from 'react';
 import NumberFormat from 'react-number-format';
-import { Card, CardImg, CardImgOverlay } from 'reactstrap';
+import { Card, CardImg } from 'reactstrap';
 
 // Style Css
 import "./Orders.scss";
 
 // Logo Image
-import Logo from "../../../assets/img/logo/Logo.png";
+// import Logo from "../../../assets/img/logo/Logo.png";
 
 const Orders = ({props,product}) => {
 

@@ -25,20 +25,18 @@ const LandingPage = () => {
     const [state, dispatch] = useContext(AppContext);
 
     const [productsItems, setProducts] = useState([]);
-    // const [keyword, setKeyword] = useState('');
+    const [keyword, setKeyword] = useState('');
 
     const [detailId, setDetailId] = useState(0);
     
     const [loading, setLoading] = useState(true);
 
-    // const [filteredPost, setFilterPost] = useState([]);
+    const [filteredPost, setFilterPost] = useState([]);
 
-    // const handleSearch = (e) => {
-    //     setKeyword(e.target.value)
-    // }
+    const handleSearch = (e) => {
+        setKeyword(e.target.value)
+    }
 
-    // console.log("keyword",keyword);
-    // console.log("keyword tipe",typeof(keyword));
 
 
     const fetchProducts = async ( ) => {
@@ -64,14 +62,14 @@ const LandingPage = () => {
     // fitur search all post
     // =============================================================
 
-    // useEffect(() => {
-    //     setFilterPost(
-    //     productsItems.filter((product) =>
-    //         product.name.toLowerCase().includes(keyword.toLowerCase())
-    //         // product.name.toLowerCase().includes(keyword.toLowerCase())
-    //     )
-    //     );
-    // }, [keyword, productsItems]);
+    useEffect(() => {
+        setFilterPost(
+        productsItems.filter((product) =>
+            product.name.toLowerCase().includes(keyword.toLowerCase())
+            // product.name.toLowerCase().includes(keyword.toLowerCase())
+        )
+        );
+    }, [keyword, productsItems]);
     // =============================================================
     // fitur search all post
     // =============================================================
@@ -102,20 +100,20 @@ const LandingPage = () => {
                         <Col md="4">
                             <h3 className="lets-order">Let’s Order</h3>
                         </Col>
-                        {/* <Col md={{size: 3, offset:5}} className="text-right">
+                        <Col md={{size: 3, offset:5}} className="text-right">
                             <div className="form-group has-search">
                                 <span className="form-control-feedback"> <img src={Search} alt="search"></img> </span>
                                 <Input type="text" name="seacrh" id="examplePassword" placeholder="Seacrh Menu" onChange={handleSearch} />
                             </div>
-                        </Col> */}
+                        </Col>
 
                     </Row>
                     <Row>
                         {
-                            productsItems.length == 0 ? (
+                            filteredPost.length == 0 ? (
                                 <h3 className="text-danger font-weight-bold mx-auto mt-3">Not Found</h3>
                             ) : (
-                                productsItems.map((product) => (
+                                filteredPost.map((product) => (
                                     <Col md="3" key={product.id} onClick={() => handleDetail(product.id)} style={{cursor:"pointer"}}>
                                         <Orders  product={product} />
                                     </Col>

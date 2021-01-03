@@ -16,7 +16,7 @@ import QrCode from "../../assets/img/qrcode/qr-code.png";
 // Styel css
 import "./Profile.scss";
 import Transactions from '../../components/Home/Transactions';
-import Product from '../Product';
+// import Product from '../Product';
 
 const Profile = () => {
 
@@ -97,30 +97,6 @@ const Profile = () => {
             preview : URL.createObjectURL(e.target.files[0]),
             raw : e.target.files[0]
         })
-
-        // if (image) {
-        //     try {
-        //         const body = new FormData();
-        //         body.append("photo", image.raw);
-
-        //         const config = {
-        //         headers: {
-        //             "content-type": "multipart/form-data",
-        //         },
-        //         };
-                
-        //         const response = await API.patch("/user", body, config);
-        //         if (response.status == 200) {
-        //             setModalAvatar(true)
-        //             dispatch({
-        //                 type: "USER_LOADED",
-        //                 payload: response.data.data.user
-        //             });
-        //         }
-        //     } catch (err) {
-        //         console.log(" your system error : ",err);
-        //     }
-        // }
         }
     }
 
@@ -175,8 +151,8 @@ const Profile = () => {
         const toggleAvatarFailed = () => setModalAvatarFailed(!modalAvatarFailed);
         // modal AvatarFailed
 
-    console.log("product items ",productsItems);
-    console.log("product image profil ",image);
+    // console.log("product items ",productsItems
+    // console.log("product image profil ",image);
     return loading ? <Loading /> :
     (
         <Fragment>
@@ -187,10 +163,10 @@ const Profile = () => {
                             <h3 className="title-profile">My Profile</h3>
                             <Row>
 
-                                <Col md="4">
-                                    <label htmlFor="avatar">
+                                <Col md="4" >
+                                    <label htmlFor="avatar" className="curson-avatar">
                                         {
-                                            state.avatar == '' ? (
+                                            state.avatar == '' || state.avatar == null ? (
                                                 <img src={Avatar} alt="Profil" className="img-fluid" ></img>
                                             ) : (
                                                 <img src={state.avatar} alt="Profil" className="img-fluid" ></img>
@@ -216,56 +192,61 @@ const Profile = () => {
                         <Col md="7">
                             <h3 className="title-transaction">My Transaction</h3>
                             {
-                                productsItems.map(transaction => (
-                                    <Card key={transaction.id} className="card-transaction m-2">
-                                        <Row className="result-transaction">
-                                            <Col md="8">
-                                                <Row>
+                                productsItems.length == 0 ? (
+                                    <h5 className="text-danger">Not Found</h5>
+                                ) 
+                                : (
+                                    productsItems.map(transaction => (
+                                        <Card key={transaction.id} className="card-transaction m-2">
+                                            <Row className="result-transaction">
+                                                <Col md="8">
+                                                    <Row>
+                                                        {
+
+                                                            transaction.products.map(itemProduct => (
+                                                                <Transactions key={itemProduct.id} date={transaction.createdAt} product={itemProduct}/>
+                                                            )).reverse()
+
+                                                        }
+                                                    </Row>
                                                     {
-
-                                                        transaction.products.map(itemProduct => (
-                                                            <Transactions key={itemProduct.id} date={transaction.createdAt} product={itemProduct}/>
-                                                        )).reverse()
-
+                                                        transaction.status === "On The Way" ? (
+                                                            <Button color="warning" className="text-white" size="sm" onClick={handleAccepted} value={transaction.id}>Confirmation Arrival</Button>
+                                                        ) : null
                                                     }
-                                                </Row>
-                                                {
-                                                    transaction.status === "On The Way" ? (
-                                                        <Button color="warning" className="text-white" size="sm" onClick={handleAccepted} value={transaction.id}>Confirmation Arrival</Button>
-                                                    ) : null
-                                                }
-                                            </Col>
-                                            <Col md="4" className="text-center">
-                                                <img src={Logo} alt="Logo" className="mb-4 mx-auto d-block"></img>
-                                                <img src={QrCode} alt="qr-code" className="mb-3 mx-auto d-block"></img>
-                                                {
-                                                    transaction.status == "On The Way" ? (
-                                                        <p className="status-transaction-otw">{transaction.status}</p>
-                                                    ): transaction.status == "Waiting Approve" ? (
-                                                        <p className="status-transaction-wait">{transaction.status}</p>
-                                                    ):transaction.status == "Cancel" ? (
-                                                        <p className="status-transaction-cancel">{transaction.status}</p>
-                                                    ):transaction.status == "Success" ? (
-                                                        <p className="status-transaction-success">{transaction.status}</p>
-                                                    ):null
-                                                }
-                                                <p className="sub-price-transaction">
-                                                    
-                                                    <NumberFormat 
-                                                        value={transaction.income} 
-                                                        displayType={'text'} 
-                                                        thousandSeparator={true} 
-                                                        prefix={'Sub Total : Rp. '} 
-                                                        renderText={
-                                                            value => <p className="text-danger"> {value}</p>
-                                                        } 
-                                                    />
-                                                    
-                                                </p>
-                                            </Col>
-                                        </Row>
-                                    </Card>
-                                )).reverse()
+                                                </Col>
+                                                <Col md="4" className="text-center">
+                                                    <img src={Logo} alt="Logo" className="mb-4 mx-auto d-block"></img>
+                                                    <img src={QrCode} alt="qr-code" className="mb-3 mx-auto d-block"></img>
+                                                    {
+                                                        transaction.status == "On The Way" ? (
+                                                            <p className="status-transaction-otw">{transaction.status}</p>
+                                                        ): transaction.status == "Waiting Approve" ? (
+                                                            <p className="status-transaction-wait">{transaction.status}</p>
+                                                        ):transaction.status == "Cancel" ? (
+                                                            <p className="status-transaction-cancel">{transaction.status}</p>
+                                                        ):transaction.status == "Success" ? (
+                                                            <p className="status-transaction-success">{transaction.status}</p>
+                                                        ):null
+                                                    }
+                                                    <p className="sub-price-transaction">
+                                                        
+                                                        <NumberFormat 
+                                                            value={transaction.income} 
+                                                            displayType={'text'} 
+                                                            thousandSeparator={true} 
+                                                            prefix={'Sub Total : Rp. '} 
+                                                            renderText={
+                                                                value => <p className="text-danger"> {value}</p>
+                                                            } 
+                                                        />
+                                                        
+                                                    </p>
+                                                </Col>
+                                            </Row>
+                                        </Card>
+                                    )).reverse()
+                                )
                             }
                         </Col>
                     </Row>

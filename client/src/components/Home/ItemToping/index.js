@@ -58,7 +58,7 @@ const ItemTopings = ({props,toping,handleAddTopings}) => {
   return (
     <div className="toping-wrapper">
         <div className="round">
-            <label for={name}>
+            <label htmlFor={name}>
               <img className="img-toping1" src={photo} alt="toping" />
             </label> 
             <input onChange={() => handleToping(price, id, name)} value={price} type="checkbox" id={name} />

@@ -53,7 +53,6 @@ const OrderCart = ({props, cart}) => {
 
   // let totalSubOrder = [];
   useEffect(() => {
-    console.log("total temp totalSubOrder",totaltemp);
     // let priceList = state.isToping.map((prices) => parseInt(prices.price))
     let sum = totaltemp.reduce((a,b) => a + b, 0)
     let sumTotal = itemOrder.price + sum
@@ -68,11 +67,6 @@ const OrderCart = ({props, cart}) => {
     // setSubTotal([...subTotal,sumTotal]);
     
   }, [itemOrder.price])
-
-    console.log("type total",typeof(total));
-    console.log("total",total);
-    console.log("tes",state);
-    
     // =================================================
     // handle remove cart item
     // =================================================
@@ -130,7 +124,6 @@ const OrderCart = ({props, cart}) => {
                   Object.keys(cart.topings).map((index) => 
                     {
                       totaltemp = [...totaltemp ,cart.topings[index].price];
-                      console.log("total temp",totaltemp);
                     }
                   )
                 )
