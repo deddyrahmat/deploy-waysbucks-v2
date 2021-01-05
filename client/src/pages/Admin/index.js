@@ -165,6 +165,8 @@ const Admin = (props) => {
 
                   {/* <TableAdmin transactions={transactionsItems} /> */}
 
+                {
+                  transactionsItems.length > 0  ? (
                   <Table bordered>
                     <thead className="bg-table-admin">
                       <tr>
@@ -177,6 +179,7 @@ const Admin = (props) => {
                         <th className="text-center">Action</th>
                       </tr>
                     </thead>
+
                     <tbody className="body-table-admin">
                       {
                         transactionsItems.map(transaction => (
@@ -229,7 +232,12 @@ const Admin = (props) => {
                         ))
                       }
                     </tbody>
+
                   </Table>
+                      ) : (
+                          <h3 className="mx-auto text-center font-weight-bold text-danger">Not Found</h3>
+                        )
+                    }
 
 
               </Col>
