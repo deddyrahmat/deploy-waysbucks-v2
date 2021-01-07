@@ -89,6 +89,7 @@ exports.createToping = async (req, res) => {
 
         const {body,files} = req;
         const fileName = files.photo[0].filename
+        const path = files.photo[0].path
 
         const schema = Joi.object({
             name : Joi.string().min(5).required(),
@@ -109,9 +110,9 @@ exports.createToping = async (req, res) => {
             })
         }
 
-        const result = await cloudinary.uploader.upload(files.photo[0].path);//harus path karna menangkap data path saja
+        // const result = await cloudinary.uploader.upload(files.photo[0].path);//harus path karna menangkap data path saja
 
-        const toping = await Toping.create({...body,photo: result.secure_url, cloudinary_id: result.public_id, });
+        const toping = await Toping.create({...body,photo: path, cloudinary_id: fileName });
         // const toping = await Toping.create({...body, photo: fileName });
 
         res.send({

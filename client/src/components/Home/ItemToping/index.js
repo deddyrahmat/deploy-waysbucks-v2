@@ -54,7 +54,7 @@ const ItemTopings = ({props,toping,handleAddTopings}) => {
       }
   }
 
-  console.log("status ", state);
+  // console.log("status ", state);
   return (
     <div className="toping-wrapper">
         <div className="round">

@@ -22,6 +22,7 @@ exports.getTrasactions = async (req, res) => {
             attributes: {
                 exclude: ["userId","createdAt", "updatedAt","UserId"],
             },
+            order: [["createdAt", "DESC"]], 
             include : [
                 {
                     attributes: {
@@ -163,10 +164,10 @@ exports.createTransaction = async (req,res) => {
         //files = array of object / hanya didapat jika melewati upload middleware
 
         const {body,files} = req;
-        console.log("body",body);
-        console.log("product body",body.products);
-        console.log("product body tipe",typeof(body.products));
-        console.log("files",files);
+
+        const { products } = body;
+        console.log("products", products); 
+        console.log("products json parse", JSON.parse(products)); 
 
         // const fileName = files.photo[0].filename
 
@@ -196,17 +197,22 @@ exports.createTransaction = async (req,res) => {
 
         // // console.log(req.user);
         
-        const { products } = body;
+        
+
+        const fileName = files.photo[0].filename
+        const path = files.photo[0].path
         
         const { id: userId } = req.user;
 
-        const result = await cloudinary.uploader.upload(files.photo[0].path);//harus path karna menangkap data path saja
+        // const result = await cloudinary.uploader.upload(files.photo[0].path);//harus path karna menangkap data path saja
 
-        const transaction = await Transaction.create({...body, userId, attachment: result.secure_url,status: "Waiting Approve", cloudinary_id: result.public_id, });
+        const transaction = await Transaction.create({...body, userId : userId, status: "Waiting Approve", attachment: path, cloudinary_id: fileName });
         
         JSON.parse(products).map(async (product) => {
             // console.log("hasil produk : " +product.amount);// id transaksi terbaru : "+ transaction.id
             const { id, amount } = product;
+            console.log("product json", product);
+            console.log("id product", id);
             const addTransactionProduct = await TransactionProduct.create({
                 transactionId : transaction.id,
                 productId : id,
@@ -216,10 +222,10 @@ exports.createTransaction = async (req,res) => {
             
             // console.log(product.topings);
             const {topings} = product;
-            console.log("toping dari produk cart", topings);
+            // console.log("toping dari produk cart", topings);
             topings.map(async (toping) => {
                 Object.keys(toping).map(async (item) => {
-                    console.log("item toping ", toping[item]);
+                    // console.log("item toping ", toping[item]);
                     await TransactionToping.create({
                         transactionProductId : addTransactionProduct.id,
                         topingId : toping[item].id
@@ -244,12 +250,38 @@ exports.createTransaction = async (req,res) => {
                     model : User,
                     as : "user"
                 },
+                
                 {
                     attributes: {
-                        exclude: ["TransactionId","transactionId","ProductId","productId","createdAt", "updatedAt"],
+                        exclude: ["id","TransactionId","transactionId","ProductId","productId","createdAt", "updatedAt"],
                     },
                     model : TransactionProduct,
-                    as : "products"
+                    as : "products",
+                    include : [
+                        {
+                            attributes: {
+                                exclude: ["createdAt", "updatedAt"],
+                            },
+                            model : Product,
+                            as :"product"
+                        },
+                        {
+                            attributes: {
+                                exclude: ["id","transactionProductId","TransactionProductId","topingProductId","TopingId","createdAt", "updatedAt"],
+                            },
+                            model : TransactionToping,
+                            as :"topings",
+                            include : [
+                                {
+                                    attributes: {
+                                        exclude: ["transactionProductId","topingId","TransactionProductId","TopingId","createdAt", "updatedAt"],
+                                    },
+                                    model : Toping,
+                                    as:"toping"
+                                }
+                            ]
+                        }
+                    ]
                 }
                 
             ]
@@ -390,7 +422,7 @@ exports.myTransaction = async (req,res) => {
             attributes: {
                 exclude: ["userId", "updatedAt","UserId"],
             },
-            order: [["createdAt", "DESC"]], 
+            order: [["createdAt", "ASC"]], 
             include : [
                 {
                     attributes: {
@@ -406,16 +438,14 @@ exports.myTransaction = async (req,res) => {
                     },
                     model : TransactionProduct,
                     as : "products",
-                    include : 
+                    include : [
                         {
                             attributes: {
                                 exclude: ["createdAt", "updatedAt"],
                             },
                             model : Product,
                             as :"product"
-                        }
-                    ,
-                    include : 
+                        },
                         {
                             attributes: {
                                 exclude: ["id","transactionProductId","TransactionProductId","topingProductId","TopingId","createdAt", "updatedAt"],
@@ -432,7 +462,7 @@ exports.myTransaction = async (req,res) => {
                                 }
                             ]
                         }
-                    
+                    ]
                 }
                 
             ]

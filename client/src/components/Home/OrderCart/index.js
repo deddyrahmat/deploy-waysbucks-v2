@@ -43,7 +43,7 @@ const OrderCart = ({props, cart}) => {
 
   let totaltemp = [];
   useEffect(() => {
-    console.log("total temp atas",totaltemp);
+    // console.log("total temp atas",totaltemp);
     // let priceList = state.isToping.map((prices) => parseInt(prices.price))
     let sum = totaltemp.reduce((a,b) => a + b, 0)
     let sumTotal = itemOrder.price + sum
@@ -58,7 +58,7 @@ const OrderCart = ({props, cart}) => {
     let sumTotal = itemOrder.price + sum
 
     if (!isNaN(sumTotal)) {
-      console.log("dsipat",sumTotal);
+      // console.log("dsipat",sumTotal);
       dispatch({
         type : "SUB_TOTAL",
         payload : sumTotal
@@ -72,7 +72,7 @@ const OrderCart = ({props, cart}) => {
     // =================================================
     
     const handleRemoveCart = () => {
-      console.log("id cart",id);
+      // console.log("id cart",id);
       dispatch({
         type: "REMOVE_CART",
         payload: id

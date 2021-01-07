@@ -16,14 +16,16 @@ module.exports = (sequelize, DataTypes) => {
       );//tidak bisa pake alias
 
 
-      // Transaction.hasOne(models.TransactionProduct, 
-      //   {as: 'products', foreignKey: 'transactionId'}
-      // );//tidak bisa pake alias
+      Transaction.hasOne(models.TransactionProduct, 
+        {as: 'transactionProduct', foreignKey: 'id'}
+      );//tidak bisa pake alias
 
 
-      Transaction.belongsTo(models.User,{
-        as : "user"
-      });
+      // Transaction.belongsTo(models.User,{
+      //   as : "user"
+      // });
+
+      Transaction.belongsTo(models.User, { as: "user", foreignKey: "userId" });
     }
   };
   Transaction.init({

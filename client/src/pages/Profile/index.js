@@ -26,6 +26,8 @@ const Profile = () => {
 
     const [productsItems, setProducts] = useState([]);
 
+    console.log("produk", productsItems);
+
     const [transactionItems, setTransaction] = useState([]);
 
     const [loading, setLoading] = useState(true);
