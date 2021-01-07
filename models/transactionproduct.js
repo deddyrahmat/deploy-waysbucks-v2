@@ -12,12 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       TransactionProduct.belongsTo(models.Transaction);
+
+
       TransactionProduct.belongsTo(models.Product,{
         as : "product", foreignKey: 'productId'
       });
+
       // TransactionProduct.belongsToMany(models.Product, { through: 'percobaan', foreignKey: 'productId' })
       TransactionProduct.hasMany(models.TransactionToping,{
-        as : "topings", foreignKey: 'TransactionProductId'
+        as : "topings", foreignKey: 'id'
       });
     }
   };

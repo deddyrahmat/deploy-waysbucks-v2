@@ -14,9 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       Transaction.hasMany(models.TransactionProduct, 
         {as: 'products', foreignKey: 'transactionId'}
       );//tidak bisa pake alias
+
+
       // Transaction.hasOne(models.TransactionProduct, 
       //   {as: 'products', foreignKey: 'transactionId'}
       // );//tidak bisa pake alias
+
+
       Transaction.belongsTo(models.User,{
         as : "user"
       });

@@ -128,7 +128,7 @@ const FormToping = (props) => {
           </Modal>
           <Modal style={{marginTop:"200px"}} isOpen={modalFailed} toggle={toggleFailed}>
             <ModalBody>
-              <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Created Toping Failed</p>
+              <p style={{color:"#c70039", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Created Toping Failed</p>
             </ModalBody>
           </Modal>
         </Fragment>

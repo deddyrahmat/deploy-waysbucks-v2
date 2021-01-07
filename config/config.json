@@ -1,14 +1,10 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
+    "username": "postgres",
+    "password": "root",
     "database": "waysbucks",
     "host": "127.0.0.1",
-    "dialect": "mysql",
-    "dialectOptions": {
-      "useUTC": false
-    },
-    "timezone": "Asia/Jakarta"
+    "dialect": "postgresql"
   },
   "test": {
     "username": "root",
@@ -18,13 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "use_env_variable": "DATABASE_URL",
-    "dialect": "mysql",
-    "protocol": "mysql",
-    "dialectOptions": {
-      "ssl": {
-          "rejectUnauthorized": false
-      }
-    }
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
 }

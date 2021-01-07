@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       TransactionToping.belongsTo(models.TransactionProduct,{
-        as : "topings", foreignKey: 'TransactionProductId'
+        as : "topingProducts", foreignKey: 'transactionProductId'
       });
 
       TransactionToping.belongsTo(models.Toping,{

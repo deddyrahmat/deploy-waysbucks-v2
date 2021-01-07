@@ -50,6 +50,7 @@ exports.register = async (req,res) => {
         }
 
         const {fullname, email, password} = body;
+        const role = "user";
 
         // encrypt password dengan bcrypt
         const hashPassword = await bcrypt.hash(password, 12);
@@ -58,12 +59,13 @@ exports.register = async (req,res) => {
         const regis = await User.create({
             fullname,
             email,
+            role,
             password : hashPassword
         })
 
         // private key for token
-        // const privateKey = process.env.JWT_PRIVATE_KEY;
-        const privateKey = {use_env_variable: "JWT_PRIVATE_KEY"};
+        const privateKey = process.env.JWT_PRIVATE_KEY;
+        // const privateKey = {use_env_variable: "JWT_PRIVATE_KEY"};
 
         // proses pembuatan token dengan jsonwebtoken
         const token = jwt.sign({
@@ -147,8 +149,8 @@ exports.login = async (req, res) => {
             });
         }
 
-        // const privateKey = process.env.JWT_PRIVATE_KEY;
-        const privateKey = {use_env_variable: "JWT_PRIVATE_KEY"};
+        const privateKey = process.env.JWT_PRIVATE_KEY;
+        // const privateKey = {use_env_variable: "JWT_PRIVATE_KEY"};
         const token = jwt.sign(
         {
             id: account.id,

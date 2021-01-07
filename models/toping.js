@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       // Toping.hasMany(models.TransactionProduct);
 
-      Toping.hasMany(models.TransactionToping);
+      // Toping.hasMany(models.TransactionToping);
     }
   };
   Toping.init({

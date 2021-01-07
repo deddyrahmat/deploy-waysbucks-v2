@@ -29,6 +29,16 @@ const FormProduct = (props) => {
 
   const [loading, setLoading] = useState(true);
 
+  // modal Success
+    const [modalSuccess, setModalSuccess] = useState(false);    
+    const toggleSuccess = () => setModalSuccess(!modalSuccess);
+    // modal Success
+
+    // modal Failed
+    const [modalFailed, setModalFailed] = useState(false);    
+    const toggleFailed = () => setModalFailed(!modalFailed);
+    // modal Failed
+
   const handleChangeproduct = (e) => {
     setProduct({...product,  [e.target.name] : e.target.value})
   }
@@ -45,9 +55,6 @@ const FormProduct = (props) => {
   const handleSubmitProduct = async (e) => {
     e.preventDefault();
     const {nameProduct, price} = product;
-    console.log("harga",price);
-    console.log("harga tipe",typeof(price));
-    console.log("replace", price.replace(/,/g , ''));
 
     try {
       const body = new FormData();
@@ -86,16 +93,6 @@ const FormProduct = (props) => {
 
   }
 
-    // modal Success
-    const [modalSuccess, setModalSuccess] = useState(false);    
-    const toggleSuccess = () => setModalSuccess(!modalSuccess);
-    // modal Success
-
-    // modal Failed
-    const [modalFailed, setModalFailed] = useState(false);    
-    const toggleFailed = () => setModalFailed(!modalFailed);
-    // modal Failed
-
   return (
       <Fragment>
           <Form onSubmit={handleSubmitProduct}>
@@ -128,7 +125,7 @@ const FormProduct = (props) => {
           </Modal>
           <Modal style={{marginTop:"200px"}} isOpen={modalFailed} toggle={toggleFailed}>
             <ModalBody>
-              <p style={{color:"#469F74", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Created Product Failed</p>
+              <p style={{color:"#c70039", fontSize:"24px", fontWeight:"normal", margin:"auto", textAlign:"center"}}>Created Product Failed</p>
             </ModalBody>
           </Modal>
       </Fragment>

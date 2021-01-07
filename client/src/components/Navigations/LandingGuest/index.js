@@ -26,6 +26,10 @@ const LandingGuest = () => {
 
   const toggleRegister = () => setModalRegister(!modalRegister);
 
+  const [modalFailed, setModalFailed] = useState(false);
+
+  const toggleFailed = () => setModalFailed(!modalFailed);
+
   // ============================================
   // Login
   // ============================================
@@ -46,6 +50,8 @@ const LandingGuest = () => {
 
   const login = async (email, password) => {
     
+    try {
+      
         const body = JSON.stringify({ email, password });
 
         const config = {
@@ -71,6 +77,11 @@ const LandingGuest = () => {
         }else if (result.role === "admin") {
           router.push("/admin")
         }
+      }
+      catch (err) {
+        console.log("Your System Error",err);
+        setModalFailed(true)
+      }
   }
   
 
@@ -82,7 +93,7 @@ const LandingGuest = () => {
         login(email, password);
         
       } catch (err) {
-        console.log(err);
+        console.log("Your System Error",err);
         setModalFailed(true)
       }
   }
@@ -145,10 +156,6 @@ const LandingGuest = () => {
     toggleLogin();
     toggleRegister();
   }
-
-  const [modalFailed, setModalFailed] = useState(false);
-
-  const toggleFailed = () => setModalFailed(!modalFailed);
   
 
   return (

@@ -382,6 +382,7 @@ exports.myTransaction = async (req,res) => {
         
         const {id} = req.user;
         console.log(id)
+        // const myTransaction = await Transaction.findAll({ where: condition })
         const myTransaction = await Transaction.findAll({
             where : {
                 userId : id
@@ -398,22 +399,26 @@ exports.myTransaction = async (req,res) => {
                     model : User,
                     as : "user"
                 },
+                
                 {
                     attributes: {
                         exclude: ["id","TransactionId","transactionId","ProductId","productId","createdAt", "updatedAt"],
                     },
                     model : TransactionProduct,
                     as : "products",
-                    include : [
+                    include : 
                         {
                             attributes: {
                                 exclude: ["createdAt", "updatedAt"],
                             },
                             model : Product,
                             as :"product"
-                        },{
+                        }
+                    ,
+                    include : 
+                        {
                             attributes: {
-                                exclude: ["id","transactionProductId","TransactionProductId","TopingId","createdAt", "updatedAt"],
+                                exclude: ["id","transactionProductId","TransactionProductId","topingProductId","TopingId","createdAt", "updatedAt"],
                             },
                             model : TransactionToping,
                             as :"topings",
@@ -427,7 +432,7 @@ exports.myTransaction = async (req,res) => {
                                 }
                             ]
                         }
-                    ]
+                    
                 }
                 
             ]
