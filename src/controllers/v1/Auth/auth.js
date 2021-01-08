@@ -65,8 +65,6 @@ exports.register = async (req,res) => {
 
         // private key for token
         const privateKey = process.env.JWT_PRIVATE_KEY;
-        // const privateKey = {use_env_variable: "JWT_PRIVATE_KEY"};
-        // const privateKey = "dumbways";
 
         // proses pembuatan token dengan jsonwebtoken
         const token = jwt.sign({
@@ -151,8 +149,6 @@ exports.login = async (req, res) => {
         }
 
         const privateKey = process.env.JWT_PRIVATE_KEY;
-        // const privateKey = {use_env_variable: "JWT_PRIVATE_KEY"};
-        // const privateKey = "dumbways";;
         const token = jwt.sign(
         {
             id: account.id,
